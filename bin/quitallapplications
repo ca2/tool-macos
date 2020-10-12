@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+open -a /archive/tool/automator/quitallapplications.app
+

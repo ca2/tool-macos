@@ -1,0 +1,46 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+buildresulttimefile="$logfolder/build_failed_time.txt"
+
+buildresulttime=`date +"%Y-%m-%d %H:%M:%S"`
+
+printf "$buildresulttime" > "$buildresulttimefile"
+
+buildfailedfile="$logfolder/build_failed.txt"
+
+printf "$build" > "$buildfailedfile"
+
+buildfailedstatusfile="$logfolder/build_failed_status.txt"
+
+if [ -z "$buildfailedstatus" ]; then
+
+   buildfailedstatus="Build Failed"
+
+fi
+
+printf "$buildfailedstatus" > "$buildfailedstatusfile"
+
+failedmail="$mailfolder/build_failed.txt"
+
+touch "$failedmail"
+
+emailtitle="[macOS][$build] Build Failed!!😡"
+
+echo >> "$failedmail"
+echo "😡[macOS][$build] Build Failed!!" >> "$failedmail"
+echo >> "$failedmail"
+echo >> "$failedmail"
+echo "Build Log: $mainlog" >> "$failedmail"
+echo >> "$failedmail"
+echo >> "$failedmail"
+cat "$mainlog" >> "$failedmail"
+
+mail -s "$emailtitle" production_failed@ca2.email < "$failedmail"
+
+post_status stage@ca2.cc "[$build] 😡 macOS Build Failed!!"
+
+
+

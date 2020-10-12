@@ -1,0 +1,29 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+
+. _build_vars
+
+
+task=basic
+itemcount=4
+
+
+. _build_task_start
+
+
+build=$1
+
+
+$__archive/tool/bin/arc-item 0 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-basic.xcworkspace" "app-core" "hellomultiverse" 
+$__archive/tool/bin/arc-item 1 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-basic.xcworkspace" "app-core" "flag" 
+$__archive/tool/bin/arc-item 2 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-basic.xcworkspace" "app-cidadedecuritiba" "alphaclock" 
+$__archive/tool/bin/arc-item 3 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-basic.xcworkspace" "app-core" "projection" 
+
+
+. _build_task_end
+
+
+

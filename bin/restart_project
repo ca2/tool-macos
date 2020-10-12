@@ -1,0 +1,41 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+project=$1
+group=$2
+
+. _build_vars
+
+
+
+echo "Restarting Project : \"$project\" at Group : \"$group\""
+
+IN="$project"
+tokens=(${IN//\// })
+
+name=$tokens[0]
+repo=$tokens[1]
+
+echo "Restarting Project: Name : \"$name\" at Repo : \"$repo\""
+
+. _build_vars
+
+
+task=$group
+itemcount=1
+
+
+. _build_task_start
+
+
+$__archive/tool/bin/arc-item 0 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-$task.xcworkspace" "$repo" "$name" 
+
+
+. _build_task_end
+
+
+
+
+

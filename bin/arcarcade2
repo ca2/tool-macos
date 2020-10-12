@@ -1,0 +1,25 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+
+. _build_vars
+
+
+task=arcade2
+itemcount=3
+
+. _build_task_start
+
+build=$1
+
+
+/archive/tool/bin/arc-item 0 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-arcade.xcworkspace" "game" "arkanoid" 
+/archive/tool/bin/arc-item 1 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-arcade.xcworkspace" "game" "sokoban" 
+/archive/tool/bin/arc-item 2 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-arcade.xcworkspace" "game" "pacman" 
+
+. _build_task_end
+
+
+

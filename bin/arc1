@@ -1,0 +1,7 @@
+
+svn cleanup /xcore/*
+svn update /xcore/*
+
+export build=`date +"%Y-%m-%d-%H-%M-%S"`
+
+/archive/tool/bin/arc-item "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "commander" 

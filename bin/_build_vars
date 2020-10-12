@@ -1,0 +1,16 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+build=$(<"$__/share/releasedatetime.txt")
+
+resultfolder="$CORE_BUILD_BASE"   
+
+base="$resultfolder/time/$build"
+
+logfolder="$base/build_log" 
+
+mainlog="$logfolder/build.log"
+
+

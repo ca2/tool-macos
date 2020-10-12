@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+export atime=`date +"%Y-%m-%d-%H-%M-%S"`
+

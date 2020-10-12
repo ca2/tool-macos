@@ -1,0 +1,231 @@
+#!/bin/zsh
+
+itemindex=$1
+task=$2
+build=$3
+workspace=$4
+repos=$5
+scheme=$6
+
+
+
+resultfolder="$CORE_BUILD_BASE"
+
+base="$resultfolder/time/$build"
+
+
+optionsplist="$__archive/tool/ExportOptions.plist"
+store="$base/time/$repos/$scheme/store"
+
+archivefolder="$base/time/$repos"
+archive="$archivefolder/$scheme.xcarchive"
+
+stagefolder="$resultfolder/store/$repos"
+stage="$stagefolder/$scheme $build"
+
+logfolder="$base/build_log" 
+mainlog="$logfolder/build.log"
+
+buildlogfolder="$logfolder/ok/_020Build" 
+buildlog="$buildlogfolder/$repos-$scheme.log" 
+
+archivelogfolder="$logfolder/ok/_040archive" 
+archivelog="$archivelogfolder/$repos-$scheme.log" 
+
+ziplogfolder="$logfolder/ok/_080zip" 
+ziplog="$ziplogfolder/$repos-$scheme.log" 
+
+successfolder="$logfolder" 
+successlog="$successfolder/$repos-$scheme.log" 
+
+buildfailedfolder="$logfolder/failed/_020build" 
+buildfailedlog="$buildfailedfolder/$repos-$scheme.log" 
+
+archivefailedfolder="$logfolder/failed/_040archive" 
+archivefailedlog="$archivefailedfolder/$repos-$scheme.log" 
+
+zipfailedfolder="$logfolder/failed/_080zip" 
+zipfailedlog="$zipfailedfolder/$repos-$scheme.log" 
+
+mailfolder="$resultfolder/time/$build/mail"
+errorlog="$logfolder/error.log"
+oklog="$logfolder/success.log"
+
+
+taskfolder="$logfolder/task/$task"
+
+
+touch "$taskfolder/$repos-$scheme.lock"
+
+printf "$itemindex" > "$taskfolder/__current_item.txt"
+
+mkdir -p "$archivefolder"
+
+mkdir -p "$logfolder"
+
+mkdir -p "$buildlogfolder"
+
+echo "BuildLog: " $buildlog
+
+touch "$mainlog"
+
+touch "$buildlog"
+
+xcodebuild -workspace $workspace -scheme "$scheme" archive -archivePath "$archive" 2>&1 | tee -a "$buildlog"
+
+buildstatus="${pipestatus[1]}"
+
+echo | tee -a "$buildlog"
+
+echo | tee -a "$buildlog" 
+
+echo "[$repos/$scheme] xcodebuild exited with code $buildstatus" | tee -a "$buildlog" "$mainlog" 
+
+#buildstatus=1
+
+if [ $buildstatus -eq 0 ]; then
+
+  mkdir -p "$archivelogfolder"
+
+  mkdir -p "$store"
+
+  echo "ArchiveLog: " $archivelog
+
+  touch "$archivelog"
+
+  xcodebuild -archivePath "$archive" -exportArchive -exportPath "$store" -exportOptionsPlist "$optionsplist" 2>&1 | tee -a "$archivelog" 
+
+  archivestatus="${pipestatus[1]}"
+
+  echo | tee -a "$archivelog" 
+
+  echo | tee -a "$archivelog"  
+
+  echo "[$repos/$scheme] archiveexited with code $archivestatus" | tee -a "$archivelog" "$mainlog" 
+
+  #archivestatus=1
+
+  if [ $archivestatus -eq 0 ]; then
+
+    mkdir -p "$ziplogfolder"
+
+    echo "ZipLog: " $ziplog
+
+    touch "$ziplog"
+
+    rm "$store/DistributionSummary.plist" 2>&1 | tee -a "$ziplog"
+    rm "$store/ExportOptions.plist" 2>&1 | tee -a "$ziplog"  
+    rm "$store/Packaging" 2>&1 | tee -a "$ziplog"  
+
+    mkdir -p "$stagefolder"
+
+    cd "$store"
+
+    zip -r "$stage.zip" . 2>&1 | tee -a "$ziplog"  
+
+    zipstatus="${pipestatus[1]}"
+
+    echo | tee -a "$ziplog" 
+
+    echo | tee -a "$ziplog"  
+
+    echo "[$repos/$scheme] zip exited with code $zipstatus" | tee -a "$ziplog" "$mainlog" 
+
+    rm -Rf "$store" 2>&1 | tee -a "$ziplog" 
+
+    #zipstatus=1
+
+    if [ $zipstatus -eq 0 ]; then
+
+      mkdir -p "$successfolder"
+
+      touch "$successlog"
+
+      echo $0 $* | tee -a "$successlog" 
+      echo "Production Success!!" | tee -a "$successlog" 
+      echo "[macOS][$build][Build success][$repos/$scheme]" | tee -a "$successlog" 
+      echo | tee -a "$successlog"
+      echo "BuildLog: $buildlog" | tee -a "$successlog" 
+      echo "ArchiveLog: $archivelog" | tee -a "$successlog" 
+      echo "ZipLog: $ziplog" | tee -a "$successlog" 
+      mail -s "[macOS][$build][Build success][$repos/$scheme] Success" production_success@ca2.email < $successlog
+
+      echo "[$repos/$scheme]" >> "$oklog"
+
+    else
+
+      mkdir -p "$zipfailedfolder"
+
+      touch "$zipfailedlog"
+
+      echo $0 $* | tee -a "$zipfailedlog"
+      echo "Zipping FAILED!!" | tee -a "$zipfailedlog"
+      echo "[macOS][$build][Zipping FAILED][$repos/$scheme]" | tee -a "$zipfailedlog" 
+      echo | tee -a "$zipfailedlog" 
+      echo "BuildLog: $buildlog" | tee -a "$zipfailedlog" 
+      echo "ArchiveLog: $archivelog" | tee -a "$zipfailedlog" 
+      echo "ZipLog: $ziplog" | tee -a "$zipfailedlog" 
+      echo | tee -a "$zipfailedlog" 
+      echo | tee -a "$zipfailedlog" 
+      echo | tee -a "$zipfailedlog" 
+      echo | tee -a "$zipfailedlog" 
+      cat $ziplog | tee -a "$zipfailedlog" 
+      mail -s "[macOS][$build][Zipping FAILED][$repos/$scheme] FAILED" production_failed@ca2.email < $zipfailedlog
+
+      echo "[$repos/$scheme] Zip failed" >> "$errorlog"
+
+    fi
+
+
+  else
+
+    mkdir -p "$archivefailedfolder"
+
+    touch "$archivefailedlog"
+
+    echo $0 $* | tee -a "$archivefailedlog" 
+    echo "Archiving FAILED!!" | tee -a "$archivefailedlog" 
+    echo "[macOS][$build][Archiving FAILED][$repos/$scheme]" | tee -a "$archivefailedlog" 
+    echo | tee -a "$archivefailedlog" 
+    echo "BuildLog: $buildlog" | tee -a "$archivefailedlog" 
+    echo "ArchiveLog: $archivelog" | tee -a "$archivefailedlog" 
+    echo "ZipLog: (NONE - Zipping not performed)" | tee -a "$archivefailedlog" 
+    echo | tee -a "$archivefailedlog" 
+    echo | tee -a "$archivefailedlog" 
+    echo | tee -a "$archivefailedlog" 
+    cat $archivelog | tee -a "$archivefailedlog" 
+    mail -s "[macOS][$build][Archiving FAILED][$repos/$scheme] FAILED" production_failed@ca2.email < $archivefailedlog
+
+    echo "[$repos/$scheme] Archive failed" >> "$errorlog"
+
+  fi
+
+else
+
+  mkdir -p "$buildfailedfolder"
+
+  touch "$buildfailedlog"
+
+  echo $0 $* | tee -a "$buildfailedlog"
+  echo "Build FAILED!!" | tee -a "$buildfailedlog"
+  echo "[macOS][$build][Build FAILED][$repos/$scheme]" | tee -a "$buildfailedlog"
+  echo | tee -a "$buildfailedlog"
+  echo "BuildLog: $buildlog" | tee -a "$buildfailedlog"
+  echo "ArchiveLog: (NONE - Archiving not performed)" | tee -a "$buildfailedlog"
+  echo "ZipLog: (NONE - Zipping not performed)" | tee -a "$buildfailedlog"
+  echo | tee -a "$buildfailedlog"
+  echo | tee -a "$buildfailedlog"
+  echo | tee -a "$buildfailedlog"
+  echo | tee -a "$buildfailedlog"
+  cat $buildlog | tee -a "$buildfailedlog"
+  mail -s "[macOS][$build][Build FAILED][$repos/$scheme] FAILED" production_failed@ca2.email < $buildfailedlog
+
+  echo "[$repos/$scheme] Build failed" >> "$errorlog"
+
+fi
+
+
+rm "$taskfolder/$repos-$scheme.lock"
+
+
+

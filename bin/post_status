@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+posttime=`date -u +"%Y-%m-%d-%H:%M:%S"`
+id=`email_id "$1"`
+mysql --defaults-extra-file="$__sensitive/sensitive/public_mysql/post_status.cnf" -e "INSERT INTO user_tiny_status(\`user\`, \`datetime\`, \`value\`) VALUES('$id', '$posttime', '$2');"

@@ -1,0 +1,19 @@
+#!/bin/zsh
+
+
+source /archive/tool/bin/.setup
+
+
+deferdatetime=`date +"%Y-%m-%d-%H-%M-%S"`
+
+
+echo "macos-production machine shutting down at $deferdatetime!!" > /dropbox/_001macOS/notify/shutdown/x_macos-production_$deferdatetime.txt
+
+
+sleep 5s
+
+
+osascript /archive/tool/applescript/shutdown.scpt
+
+
+

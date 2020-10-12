@@ -1,0 +1,47 @@
+#!/bin/zsh
+
+. _build_vars
+
+function update_theres_build_failure()
+{
+
+    failed_project_folder="$logfolder/failed_project"
+
+    if [ -d $failed_project_folder ]; then
+
+        cd "$failed_project_folder"
+
+        setopt +o nomatch
+
+        failed_id=`find . -maxdepth 1 -name 'id-*.txt' -exec basename {} \; | grep -m1 .`
+
+        if [ ! -z $restart_md5 ]; then
+
+            touch "$logfolder/theres_failure.txt"
+
+            touch "$logfolder/there_was_failure.txt"
+
+            failed_group_folder="$logfolder/failed_group"
+
+            failed_project_file="$failed_project_folder/$failed_id"        
+
+            project=$(<"$failed_project_file")
+            group=$(<"$failed_group_folder/$failed_id")
+
+            echo "There at least one failed project $project from $group group"
+
+        else
+
+            rm "$logfolder/theres_failure.txt"
+
+        fi
+
+    fi
+
+}
+
+
+update_theres_build_failure
+
+
+

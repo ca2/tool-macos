@@ -1,0 +1,36 @@
+#!/bin/zsh
+
+. _build_vars
+
+function update_theres_build_failure_set()
+{
+
+    name=$1
+    repo=$2
+    task=$3
+
+    touch "$logfolder/theres_failure.txt"
+
+    touch "$logfolder/there_was_failure.txt"
+
+    failed_id="id-$name-$repo-$task.txt"
+
+    failed_project_folder="$logfolder/failed_project"
+
+    failed_group_folder="$logfolder/failed_group"
+
+    failed_task_folder="$logfolder/failed_task"
+
+    failed_project_file="$failed_project_folder/$failed_id"        
+
+    printf $project > "$failed_project_file"
+    printf $group > "$failed_group_folder/$failed_id"
+    printf $task > "$failed_task_folder/$failed_id"
+
+}
+
+
+update_theres_build_failure_set "$1" "$2" "$3"
+
+
+

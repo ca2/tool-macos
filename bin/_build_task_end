@@ -1,0 +1,18 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+
+rm "$tasklockfile"
+
+printf "$itemcount" > "$taskfolder/__current_item.txt"
+
+buildfinishedtimefile="$taskfolder/__finished_time.txt"
+
+buildfinishedtime=`date +"%Y-%m-%d %H:%M:%S"`
+
+printf "$buildfinishedtime" > "$buildfinishedtimefile"
+
+
+

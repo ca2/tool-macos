@@ -1,0 +1,26 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+
+. _build_vars
+
+
+task=core2
+itemcount=5
+
+. _build_task_start
+
+build=$1
+
+/archive/tool/bin/arc-item 0 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "verifile"
+/archive/tool/bin/arc-item 1 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "auraclick"
+/archive/tool/bin/arc-item 2 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "auratype"
+/archive/tool/bin/arc-item 3 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "chronometer"
+/archive/tool/bin/arc-item 4 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "timer"
+
+. _build_task_end
+
+
+

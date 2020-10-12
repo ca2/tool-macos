@@ -1,0 +1,49 @@
+#!/bin/zsh
+
+. _build_vars
+
+function defer_restart_project()
+{
+
+    restart_project_folder="$logfolder/restart_project"
+
+    if [ -d $restart_project_folder ]; then
+
+        cd "$restart_project_folder"
+
+        setopt +o nomatch
+
+        restart_md5=`find . -maxdepth 1 -name 'id-*.txt' -exec basename {} \; | grep -m1 .`
+
+        if [ ! -z $restart_md5 ]; then
+
+            restart_group_folder="$logfolder/restart_group"
+            restart_project_done_folder="$logfolder/restart_project_done"
+
+            restart_project_file="$restart_project_folder/$restart_md5"        
+            restart_project_done_file="$restart_project_done_folder/$restart_md5"        
+
+            project=$(<"$restart_project_file")
+            group=$(<"$restart_group_folder/$restart_md5")
+
+            echo "There is project to restart build $project from $group group"
+
+            restart_project "$project" "$group"
+
+            if [ ! -d $restart_project_done_folder ]; then
+
+                mkdir -p "$restart_project_done_folder"
+
+            fi
+
+            cp -f "$restart_project_file" "$restart_project_done_file"
+            rm "$restart_project_file"
+
+        fi
+
+    fi
+
+}
+
+defer_restart_project
+

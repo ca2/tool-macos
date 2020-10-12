@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+source /archive/tool/bin/.setup
+
+touch $CORE_BUILD_BASE/build/shutdown_watch_build.txt

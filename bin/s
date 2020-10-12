@@ -1,0 +1,1 @@
+sudo socat -d -d -d -d -lf /tmp/socat pty,link=/dev/master,ixoff=0,ixon=0,ispeed=9600,ospeed=9600,echo=0,crtscts=0,user=camilo,group=staff pty,link=/dev/slave,rawer,echo=0,user=camilo,group=staff

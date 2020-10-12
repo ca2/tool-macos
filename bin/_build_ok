@@ -1,0 +1,32 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+
+buildresulttimefile="$logfolder/build_ok_time.txt"
+
+buildresulttime=`date +"%Y-%m-%d %H:%M:%S"`
+
+printf "$buildresulttime" > "$buildresulttimefile"
+
+printf "$build" > "$CORE_BUILD_BASE/store/build.txt"
+
+successmail="$mailfolder/build_success.txt"
+
+touch "$successmail"
+
+emailtitle="[macOS][$build] Build Succeeded!!😀"
+
+echo >> "$successmail"
+echo "😀[macOS][$build] Build Succeeded!!" >> "$successmail"
+echo >> "$successmail"
+echo >> "$successmail"
+echo "Build Log: $mainlog" >> "$successmail"
+
+mail -s "$emailtitle" production_success@ca2.email < "$successmail"
+
+post_status stage@ca2.cc "[$build] 😀 macOS Build Succeeded!!"
+
+
+

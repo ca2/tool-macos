@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+
+if [ -L "$CODESIGNING_FOLDER_PATH/$FULL_PRODUCT_NAME" ]; then
+
+   rm $CODESIGNING_FOLDER_PATH/$FULL_PRODUCT_NAME
+
+fi
+
+
+

@@ -1,0 +1,19 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+
+taskfolder="$logfolder/task/$task"
+
+mkdir -p "$taskfolder"
+
+tasklockfile="$logfolder/task/__$task.lock"
+
+touch "$tasklockfile"
+
+printf "$itemcount" > "$taskfolder/__item_count.txt"
+
+
+
+

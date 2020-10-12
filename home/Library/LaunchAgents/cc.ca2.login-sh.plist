@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SessionCreate</key>
+	<true/>
+	<key>UserName</key>
+	<string>camilo</string>
+	<key>Label</key>
+	<string>cc.ca2.login-sh</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>$HOME/__archive/archive/tool-macos/home/login.sh</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+</dict>
+</plist>

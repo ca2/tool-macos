@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+mkdir -p "$SRCROOT/../../time-macos/library/$CONFIGURATION"
+cp -f "$HOME/__archive/archive/storage-macos/library/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME"/* "$SRCROOT/../../../time-macos/library/$CONFIGURATION"
+
+

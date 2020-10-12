@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+
+$__archive/tool/bin/_buildall
+
+
+

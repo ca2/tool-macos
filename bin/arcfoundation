@@ -1,0 +1,30 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+
+. _build_vars
+
+
+task=foundation
+itemcount=5
+
+
+. _build_task_start
+
+
+build=$1
+
+
+$__archive/tool/bin/arc-item 0 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-foundation.xcworkspace" "app-core" "addressbook" 
+$__archive/tool/bin/arc-item 1 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-foundation.xcworkspace" "app-core" "verilux" 
+$__archive/tool/bin/arc-item 2 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-foundation.xcworkspace" "app-core" "hash_hub" 
+$__archive/tool/bin/arc-item 3 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-foundation.xcworkspace" "app-core" "note" 
+$__archive/tool/bin/arc-item 4 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-foundation.xcworkspace" "design" "text_format" 
+
+
+. _build_task_end
+
+
+

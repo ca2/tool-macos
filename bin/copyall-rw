@@ -1,0 +1,20 @@
+
+
+mkdir -p "$HOME/Library/Application Support/ca2/appmatter/app/appseed"
+mkdir -p "$HOME/Library/Application Support/ca2/appmatter/app-cidadedecuritiba/appseed"
+mkdir -p "$HOME/Library/Application Support/ca2/appmatter/app-core/appseed"
+mkdir -p "$HOME/Library/Application Support/ca2/appmatter/app-simple/appseed"
+mkdir -p "$HOME/Library/Application Support/ca2/appmatter/app-veriwell/appseed"
+mkdir -p "$HOME/Library/Application Support/ca2/appmatter/design/appseed"
+mkdir -p "$HOME/Library/Application Support/ca2/appmatter/game/appseed"
+mkdir -p "$HOME/Library/Application Support/ca2/appmatter/platform/appseed"
+
+cp -Rf $__/basis/app/_matter "$HOME/Library/Application Support/ca2/appmatter/app/"
+cp -Rf $__/basis/app-cidadedecuritiba/_matter "$HOME/Library/Application Support/ca2/appmatter/app-cidadedecuritiba/"
+cp -Rf $__/basis/app-core/_matter "$HOME/Library/Application Support/ca2/appmatter/app-core/"
+cp -Rf $__/basis/app-simple/_matter "$HOME/Library/Application Support/ca2/appmatter/app-simple/"
+cp -Rf $__/basis/app-veriwell/_matter "$HOME/Library/Application Support/ca2/appmatter/app-veriwell/"
+cp -Rf $__/basis/design/_matter "$HOME/Library/Application Support/ca2/appmatter/design/"
+cp -Rf $__/basis/game/_matter "$HOME/Library/Application Support/ca2/appmatter/game/"
+cp -Rf $__/basis/platform-macos/_matter "$HOME/Library/Application Support/ca2/appmatter/platform-macos/"
+

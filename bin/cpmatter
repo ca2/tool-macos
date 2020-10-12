@@ -1,0 +1,20 @@
+
+
+mkdir -p "/Users/camilo/Library/Application Support/ca2/appmatter/app/appseed"
+mkdir -p "/Users/camilo/Library/Application Support/ca2/appmatter/app-cidadedecuritiba/appseed"
+mkdir -p "/Users/camilo/Library/Application Support/ca2/appmatter/app-core/appseed"
+mkdir -p "/Users/camilo/Library/Application Support/ca2/appmatter/app-simple/appseed"
+mkdir -p "/Users/camilo/Library/Application Support/ca2/appmatter/app-veriwell/appseed"
+mkdir -p "/Users/camilo/Library/Application Support/ca2/appmatter/design/appseed"
+mkdir -p "/Users/camilo/Library/Application Support/ca2/appmatter/game/appseed"
+mkdir -p "/Users/camilo/Library/Application Support/ca2/appmatter/platform/appseed"
+
+cp -Rf $HOME/__archive/xcore/app/appmatter "/Users/camilo/Library/Application Support/ca2/appmatter/app/"
+cp -Rf $HOME/__archive/xcore/app-cidadedecuritiba/appmatter "/Users/camilo/Library/Application Support/ca2/appmatter/app-cidadedecuritiba/"
+cp -Rf $HOME/__archive/xcore/app-core/appmatter "/Users/camilo/Library/Application Support/ca2/appmatter/app-core/"
+cp -Rf $HOME/__archive/xcore/app-simple/appmatter "/Users/camilo/Library/Application Support/ca2/appmatter/app-simple/"
+cp -Rf $HOME/__archive/xcore/app-veriwell/appmatter "/Users/camilo/Library/Application Support/ca2/appmatter/app-veriwell/"
+cp -Rf $HOME/__archive/xcore/design/appmatter "/Users/camilo/Library/Application Support/ca2/appmatter/design/"
+cp -Rf $HOME/__archive/xcore/game/appmatter "/Users/camilo/Library/Application Support/ca2/appmatter/game/"
+cp -Rf $HOME/__archive/xcore/platform/appmatter "/Users/camilo/Library/Application Support/ca2/appmatter/platform/"
+

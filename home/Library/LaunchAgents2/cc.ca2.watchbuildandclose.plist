@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SessionCreate</key>
+	<true/>
+	<key>UserName</key>
+	<string>camilo</string>	
+	<key>Label</key>
+	<string>cc.ca2.watchbuildandclose</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/archive/tool/bin/watch_build_and_close</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+</dict>
+</plist>

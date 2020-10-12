@@ -1,0 +1,38 @@
+#!/bin/zsh
+
+. _build_vars
+
+function update_theres_build_failure_clear()
+{
+
+    name=$1
+    repo=$2
+    task=$3
+
+    failed_id="id-$name-$repo-$task.txt"
+
+    failed_project_folder="$logfolder/failed_project"
+
+    failed_project_file="$failed_project_folder/$failed_id"        
+    failed_project_done_file="$failed_project_done_folder/$failed_id"        
+
+    if [ -f $failed_project_file ]; then
+
+        if [ ! -d $failed_project_done_folder ]; then
+
+            mkdir -p "$failed_project_done_folder"
+
+        fi
+
+        cp -f "$failed_project_file" "$failed_project_done_file"
+        rm "$failed_project_file"
+
+    fi
+
+}
+
+
+update_theres_build_failure_clear "$1" "$2" "$3"
+
+
+

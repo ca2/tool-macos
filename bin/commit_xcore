@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+
+svn commit -f"$__/xcore/commit.txt" /xcore/app
+svn commit -f"$__/xcore/commit.txt" /xcore/app-cidadedecuritiba
+svn commit -f"$__/xcore/commit.txt" /xcore/app-core
+svn commit -f"$__/xcore/commit.txt" /xcore/app-veriwell
+svn commit -f"$__/xcore/commit.txt" /xcore/app-simple
+svn commit -f"$__/xcore/commit.txt" /xcore/ca2
+svn commit -f"$__/xcore/commit.txt" /xcore/design
+svn commit -f"$__/xcore/commit.txt" /xcore/game
+svn commit -f"$__/xcore/commit.txt" /xcore/include
+svn commit -f"$__/xcore/commit.txt" /xcore/platform
+svn commit -f"$__/xcore/commit.txt" /xcore/third
+

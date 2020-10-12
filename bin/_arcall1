@@ -1,0 +1,99 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+
+. _build_vars
+
+build="$1"
+
+
+
+
+/archive/tool/bin/arcgroup "$build"
+
+
+
+# /archive/tool/bin/arccore "$build" &
+/archive/tool/bin/arccore1 "$build" &
+/archive/tool/bin/arccore2 "$build" &
+/archive/tool/bin/arccore3 "$build" &
+
+
+/archive/tool/bin/arcbasic "$build" &
+/archive/tool/bin/arcmultimedia "$build" &
+/archive/tool/bin/arcfoundation "$build" &
+
+
+# /archive/tool/bin/arcarcade "$build" &
+/archive/tool/bin/arcarcade1 "$build" &
+/archive/tool/bin/arcarcade2 "$build" &
+
+
+/archive/tool/bin/arccoregames "$build" &
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+touch $logfolder/_build_waiting_finish.txt
+
+buildwaitingstartedtimefile="$logfolder/_build_waiting_started_time.txt"
+
+buildwaitingstartedtime=`date +"%Y-%m-%d %H:%M:%S"`
+
+printf "$buildwaitingstartedtime" > "$buildwaitingstartedtimefile"
+
+
+while [ 1 ]; do
+
+   if [ ! -f $logfolder/_build_waiting_finish.txt ]; then
+
+      buildwaitinterruptedtimefile="$logfolder/_build_wait_interrupted_started_time.txt"
+
+      buildwaitinterruptedtime=`date +"%Y-%m-%d %H:%M:%S"`
+
+      printf "$buildwaitinterruptedtime" > "$buildwaitinterruptedtimefile"
+
+      break
+
+   fi
+
+   if [ -f $logfolder/finished_core1.txt ] &&
+      [ -f $logfolder/finished_core2.txt ] &&
+      [ -f $logfolder/finished_core3.txt ] &&
+      [ -f $logfolder/finished_coregames.txt ] &&
+      [ -f $logfolder/finished_multimedia.txt ] &&
+      [ -f $logfolder/finished_foundation.txt ] &&
+      [ -f $logfolder/finished_arcade1.txt ] &&
+      [ -f $logfolder/finished_arcade2.txt ] &&
+      [ -f $logfolder/finished_basic.txt ]; then
+
+      buildwaitfinishedtimefile="$logfolder/_build_wait_finished_started_time.txt"
+
+      buildwaitfinishedtime=`date +"%Y-%m-%d %H:%M:%S"`
+
+      printf "$buildwaitfinishedtime" > "$buildwaitfinishedtimefile"
+
+      break
+
+   fi
+
+   sleep 1
+
+done
+
+rm $logfolder/_build_waiting_finish.txt
+
+
+

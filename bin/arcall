@@ -1,0 +1,8 @@
+
+svn cleanup /xcore/*
+svn update /xcore/*
+
+export build=`date +"%Y-%m-%d-%H-%M-%S"`
+
+$__archive/tool/bin/_arcall "$build"
+

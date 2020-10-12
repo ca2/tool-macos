@@ -1,0 +1,23 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+
+. _build_vars
+
+
+task=coregames
+itemcount=2
+
+. _build_task_start
+
+build=$1
+
+$__archive/tool/bin/arc-item 0 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core_games.xcworkspace" "game" "coincube" 
+$__archive/tool/bin/arc-item 1 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core_games.xcworkspace" "game" "arch001" 
+
+. _build_task_end
+
+
+

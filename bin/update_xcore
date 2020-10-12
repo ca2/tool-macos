@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+
+svn update /xcore/app
+svn update /xcore/app-cidadedecuritiba
+svn update /xcore/app-core
+svn update /xcore/app-veriwell
+svn update /xcore/app-simple
+svn update /xcore/ca2
+svn update /xcore/design
+svn update /xcore/game
+svn update /xcore/include
+svn update /xcore/platform
+svn update /xcore/third
+

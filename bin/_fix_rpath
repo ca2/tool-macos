@@ -1,0 +1,38 @@
+#!/bin/bash
+
+
+function fix_rpath()
+{
+
+
+
+install_name_tool -change /usr/local/opt/openssl@1.1/lib/libcrypto.1.1.dylib @executable_path/libcrypto.dylib "$1"
+install_name_tool -change /usr/local/opt/openssl@1.1/lib/libssl.1.1.dylib @executable_path/libssl.dylib "$1"
+install_name_tool -change /usr/local/Cellar/openssl@1.1/1.1.1d/lib/libcrypto.1.1.dylib @executable_path/libcrypto.dylib "$1"
+install_name_tool -change /usr/local/Cellar/openssl@1.1/1.1.1d/lib/libssl.1.1.dylib @executable_path/libssl.dylib "$1"
+install_name_tool -change /usr/local/Cellar/ffmpeg/4.0.1/lib/libavcodec.58.dylib @executable_path/libavcodec.58.dylib "$1"
+install_name_tool -change /usr/local/Cellar/ffmpeg/4.0.1/lib/libavdevice.58.dylib @executable_path/libavdevice.58.dylib "$1"
+install_name_tool -change /usr/local/Cellar/ffmpeg/4.0.1/lib/libavfilter.7.dylib @executable_path/libavfilter.7.dylib "$1"
+install_name_tool -change /usr/local/Cellar/ffmpeg/4.0.1/lib/libavformat.58.dylib @executable_path/libavformat.58.dylib "$1"
+install_name_tool -change /usr/local/Cellar/ffmpeg/4.0.1/lib/libavresample.4.dylib @executable_path/libavresample.4.dylib "$1"
+install_name_tool -change /usr/local/Cellar/ffmpeg/4.0.1/lib/libavutil.56.dylib @executable_path/libavutil.56.dylib "$1"
+install_name_tool -change /usr/local/Cellar/ffmpeg/4.0.1/lib/libpostproc.55.dylib @executable_path/libavutil.56.dylib "$1"
+install_name_tool -change /usr/local/Cellar/ffmpeg/4.0.1/lib/libswresample.3.dylib @executable_path/libswresample.3.dylib "$1"
+install_name_tool -change /usr/local/Cellar/ffmpeg/4.0.1/lib/libswscale.5.dylib @executable_path/libswscale.5.dylib "$1"
+install_name_tool -change /usr/local/opt/ffmpeg/lib/libavcodec.58.dylib @executable_path/libavcodec.58.dylib "$1"
+install_name_tool -change /usr/local/opt/ffmpeg/lib/libavdevice.58.dylib @executable_path/libdevice.58.dylib "$1"
+install_name_tool -change /usr/local/opt/ffmpeg/lib/libavfilter.7.dylib @executable_path/libavfilter.7.dylib "$1"
+install_name_tool -change /usr/local/opt/ffmpeg/lib/libavformat.58.dylib @executable_path/libavformat.58.dylib "$1"
+install_name_tool -change /usr/local/opt/ffmpeg/lib/libavresample.4.dylib @executable_path/libavresample.4.dylib "$1"
+install_name_tool -change /usr/local/opt/ffmpeg/lib/libavutil.56.dylib @executable_path/libavutil.56.dylib "$1"
+install_name_tool -change /usr/local/opt/ffmpeg/lib/libpostproc.55.dylib @executable_path/libpostproc.55.dylib "$1"
+install_name_tool -change /usr/local/opt/ffmpeg/lib/libswresample.3.dylib @executable_path/libswresample.3.dylib "$1"
+install_name_tool -change /usr/local/opt/ffmpeg/lib/libswscale.5.dylib @executable_path/libswscale.5.dylib "$1"
+install_name_tool -change /usr/local/opt/lame/lib/libmp3lame.0.dylib @executable_path/libmp3lame.0.dylib "$1"
+install_name_tool -change /usr/local/opt/x264/lib/libx264.152.dylib @executable_path/libx264.152.dylib "$1"
+install_name_tool -change /usr/local/opt/libusb/lib/libusb-1.0.0.dylib @executable_path/libusb-1.0.0.dylib "$1"
+
+}
+
+
+fix_rpath "$1"

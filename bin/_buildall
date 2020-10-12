@@ -1,0 +1,133 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+
+buildall () {
+
+   build="$1"
+
+   close="$2"
+
+   mkdir -p "$CORE_BUILD_BASE/build"
+   
+   resultfolder="$CORE_BUILD_BASE"   
+
+   printf "$build" > "$CORE_BUILD_BASE/build/releasedatetime.txt"
+
+   printf "$build" > "$CORE_BUILD_BASE/build/build_started.txt"
+
+   base="$resultfolder/time/$build"
+   logfolder="$base/build_log" 
+   mainlog="$logfolder/build.log"
+
+   mkdir -p "$logfolder"
+
+   buildstartedtimefile="$logfolder/build_started_time.txt"
+
+   buildstartedtime=`date +"%Y-%m-%d %H:%M:%S"`
+
+   buildstarteddatetime=`date +"%Y-%m-%d-%H-%M-%S"`
+
+   printf "$buildstartedtime" > "$buildstartedtimefile"
+
+   touch "$mainlog"
+   
+   mailfolder="$resultfolder/time/$build/mail"
+
+   mkdir -p "$mailfolder"
+
+   startmail="$mailfolder/build_start.txt"
+
+   touch "$startmail"
+
+   emailtitle="[macOS][$build] Build Start!!"
+
+   echo >> "$startmail"
+   echo "🥁$emailtitle" >> "$startmail"
+   
+   mail -s "$emailtitle" production@ca2.email < $startmail
+
+   post_status stage@ca2.cc "[$build] 🥁 macOS Build Started!!"   
+
+   svn cleanup $__/xcore/* 2>&1 | tee -a "$mainlog"
+
+   svn update $__/xcore/* 2>&1 | tee -a "$mainlog"
+
+   errorlog=$logfolder/error.log
+
+   if [ -f $errorlog ]; then
+
+      backup="$logfolder/error-$buildstarteddatetime.log"
+
+      mv "$errorlog" "$backup"
+
+   fi
+
+   oklog=$logfolder/success.log
+
+   if [ -f $oklog ]; then
+
+      backup="$logfolder/success-$buildstarteddatetime.log"
+
+      mv "$oklog" "$backup"
+
+   fi
+
+   if [ -f $errorlog ] || [ -f $oklog ]; then
+
+      buildfailedstatus="Build couldn't start. \"error.log\" and/or \"success.log\" couldn't be moved away"
+
+      . _build_failed
+
+   else
+
+      $__archive/tool/bin/_arcall "$build"
+
+      if [ ! -f $errorlog ] && [ -f $oklog ]; then
+
+         . _build_ok
+
+      else
+
+         buildfailedstatus="Build failed"
+
+         . _build_failed
+         
+      fi
+
+   fi
+
+   if [ $close -ne 0 ]; then
+
+      launchctl start cc.ca2.shutdown-sh
+
+   fi
+
+}
+
+if [ -f $CORE_BUILD_BASE/build/build.txt ]; then
+
+	rm $CORE_BUILD_BASE/build/build.txt
+
+fi
+
+export close=0
+
+if [ -f $CORE_BUILD_BASE/build/build_and_close.txt ]; then
+
+	rm $CORE_BUILD_BASE/build/build_and_close.txt
+
+   export close=1
+
+fi
+
+build=$(<"$__/share/releasedatetime.txt")
+
+. _clean
+
+buildall "$build" "$close"
+
+
+

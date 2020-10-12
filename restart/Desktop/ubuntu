@@ -1,0 +1,2 @@
+cp /bergedge/grub/grub-ubuntu.cfg /bergedge/grub/grub.cfg
+osascript -e 'tell app "System Events" to restart'

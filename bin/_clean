@@ -1,0 +1,26 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+
+cleanall () {
+
+   
+   rm -Rf $__archive/xcode/derived_data/*
+   
+   rm -Rf $__archive/xcode/archive/*
+
+#   do smart cleanup of folders by trying to keep key logs
+
+#   rm -Rf $__/build/time/*
+
+   rm -Rf $__/xcore/time/*
+
+
+}
+
+cleanall
+
+
+

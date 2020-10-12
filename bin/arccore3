@@ -1,0 +1,25 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+
+. _build_vars
+
+
+task=core3
+itemcount=4
+
+. _build_task_start
+
+build=$1
+
+/archive/tool/bin/arc-item 0 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "todo"     
+/archive/tool/bin/arc-item 1 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "clockverse"     
+/archive/tool/bin/arc-item 2 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "resident_desktop"     
+/archive/tool/bin/arc-item 3 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-veriwell" "waven" 
+
+. _build_task_end
+
+
+

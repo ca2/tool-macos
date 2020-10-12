@@ -1,0 +1,39 @@
+#!/bin/zsh
+#
+#   [macOS]
+#
+
+
+. _build_vars
+
+
+task=core
+itemcount=14
+
+
+. _build_task_start
+
+
+build=$1
+
+
+$__archive/tool/bin/arc-item 0 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "commander" 
+$__archive/tool/bin/arc-item 1 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "commander-browser-bot" 
+$__archive/tool/bin/arc-item 2 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "commander-browser-def" 
+$__archive/tool/bin/arc-item 3 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "weather" 
+$__archive/tool/bin/arc-item 4 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "desk" 
+$__archive/tool/bin/arc-item 5 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "verifile"
+$__archive/tool/bin/arc-item 6 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "auraclick"
+$__archive/tool/bin/arc-item 7 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "auratype"
+$__archive/tool/bin/arc-item 8 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "chronometer"
+$__archive/tool/bin/arc-item 9 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "timer"
+$__archive/tool/bin/arc-item 10 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "todo"     
+$__archive/tool/bin/arc-item 11 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "clockverse"     
+$__archive/tool/bin/arc-item 12 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-core" "resident_desktop"     
+$__archive/tool/bin/arc-item 13 "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-core.xcworkspace" "app-veriwell" "waven" 
+
+
+. _build_task_end
+
+
+

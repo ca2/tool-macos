@@ -1,0 +1,28 @@
+#!/bin/zsh
+
+source $__archive/tool/bin/.setup
+
+defertime=`date +"%Y-%m-%d-%H-%M-%S"`
+
+if [ -f $CORE_BUILD_BASE/build/build.txt ]; then
+
+	echo "$defertime" > $CORE_BUILD_BASE/build/defer_build_time.txt
+
+	$__archive/tool/bin/buildall
+
+fi
+
+echo "$defertime" > $CORE_BUILD_BASE/build/watch_build_time.txt
+
+if [ -f $CORE_BUILD_BASE/build/build_and_close.txt ]; then
+
+	echo "$defertime" > $CORE_BUILD_BASE/build/defer_build_and_close_time.txt
+
+	$__archive/tool/bin/buildall
+
+fi
+
+echo "$defertime" > $CORE_BUILD_BASE/build/watch_build_and_close_time.txt
+
+
+

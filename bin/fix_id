@@ -1,0 +1,13 @@
+#!/bin/bash
+
+function fix_id
+{
+
+install_name_tool -id $1 @executable_path/$1
+
+
+}
+
+
+fix_rpath "$1"
+

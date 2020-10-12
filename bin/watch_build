@@ -1,0 +1,39 @@
+#!/bin/zsh
+
+sleep 5s
+
+source $__archive/tool/bin/.setup
+
+. _build_vars
+
+rm $CORE_BUILD_BASE/build/shutdown_watch_build.txt
+
+while [ ! -f $CORE_BUILD_BASE/build/shutdown_watch_build.txt ]
+do
+
+   sleep 2s
+
+   $__archive/tool/bin/defer_build
+
+done
+
+
+
+
+rm $CORE_BUILD_BASE/build/shutdown_watch_build.txt
+
+
+$__archive/tool/bin/update_theres_build_failure 
+
+
+while [ -f $logfolder/theres_failure.txt ]
+do
+
+   sleep 2s
+
+   $__archive/tool/bin/defer_restart_project
+
+   $__archive/tool/bin/update_theres_build_failure 
+
+done
+

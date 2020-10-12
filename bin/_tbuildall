@@ -1,0 +1,25 @@
+#!/bin/zsh
+
+
+if [ -f $CORE_BUILD_BASE/build/build.txt ]; then
+
+rm $CORE_BUILD_BASE/build/build.txt
+echo build.txt
+fi
+
+export close=0
+
+if [ -f $CORE_BUILD_BASE/build/build_and_close.txt ]; then
+
+rm $CORE_BUILD_BASE/build/build_and_close.txt
+
+   export close=1
+echo buildandclose.txt
+fi
+
+build=`cat $__/share/releasedatetime.txt`
+
+#buildall "$build" "$close"
+
+
+echo build=$build

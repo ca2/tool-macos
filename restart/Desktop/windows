@@ -1,0 +1,2 @@
+cp /bergedge/grub/grub-windows.cfg /bergedge/grub/grub.cfg
+osascript -e 'tell app "System Events" to restart'

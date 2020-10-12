@@ -1,0 +1,114 @@
+#!/bin/zsh
+
+
+build=$1
+workspace=$2
+scheme=$3
+
+
+base="$CORE_BUILD_BASE/time/$build"
+
+
+logfolder="$base/build_log" 
+mainlog="$logfolder/main.log"
+
+
+groupfolder="$logfolder/group/$scheme"
+
+
+buildlog="$groupfolder/build.log" 
+statusmailfile="$groupfolder/status_mail.txt" 
+logfilelist="$groupfolder/log_file_list.txt" 
+
+
+errorlog="$logfolder/error.log"
+oklog="$logfolder/success.log"
+
+
+mkdir -p "$logfolder"
+
+mkdir -p "$groupfolder"
+
+mainlogprefix="[group/$scheme]"
+
+echo $0 $* | tee -a "$buildlog"
+
+echo | tee -a "$buildlog"
+
+echo | tee -a "$buildlog"
+
+echo "BuildLog: " $buildlog
+
+echo | tee -a "$mainlog"
+
+echo "          $mainlogprefix Started Building $scheme" | tee -a "$buildlog" "$mainlog"
+
+touch "$mainlog"
+
+touch "$buildlog"
+
+xcodebuild -workspace $workspace -scheme "$scheme" 2>&1 | tee -a "$buildlog" 
+
+buildstatus="${pipestatus[1]}"
+
+echo | tee -a "$buildlog" "$mainlog" 
+
+echo | tee -a "$buildlog" "$mainlog" 
+
+echo "          $mainlogprefix xcodebuild exited with code $buildstatus" | tee -a "$buildlog"
+
+#buildstatus=1
+
+touch "$statusmailfile"
+
+if [ $buildstatus -eq 0 ]; then
+
+   mkdir -p "$successfolder"
+
+   touch "$statusmailfile"
+
+   left="SUCCESS!!"
+   right="Success!!"
+
+   echo "          Production Success!!" | tee -a "$statusmailfile"
+   echo "          [macOS][$build][Build success][group/$scheme]" | tee -a "$statusmailfile"
+   echo | tee -a "$statusmailfile"
+   echo "          BuildLog: https://ca2.cc/build/project_log?platform=macos&project=group-$scheme&releasedatetime=$releasedatetime&log=build" | tee -a "$statusmailfile"  "$logfilelist"
+   echo | tee -a "$statusmailfile"
+   echo | tee -a "$statusmailfile"
+   mail -s "[macOS][$build][Build success][group/$scheme] Success" production_success@ca2.email < "$statusmailfile"
+
+   echo "[group/$scheme]" >> "$oklog"
+
+else
+
+   mkdir -p "$buildfailedfolder"
+
+   left="fail     "
+   right="Build Failed ($buildstatus)!!"
+
+   echo "          Build FAILED!!" | tee -a "$statusmailfile"
+   echo "          [macOS][$build][Build FAILED][group/$scheme]" | tee -a "$statusmailfile"
+   echo | tee -a "$statusmailfile"
+   echo "          BuildLog: https://ca2.cc/build/project_log?platform=macos&project=group-$scheme&releasedatetime=$releasedatetime&log=build" | tee -a "$statusmailfile" "$logfilelist"
+   echo | tee -a "$statusmailfile"
+   echo | tee -a "$statusmailfile"
+   mail -s "[macOS][$build][Build FAILED][group/$scheme] FAILED" production_failed@ca2.email < "$statusmailfile"
+
+   echo "[group/$scheme]" >> "$errorlog" 
+
+fi
+
+cat "$logfilelist" | tee -a "$mainlog"
+
+echo "$left $mainlogprefix $right!!" | tee -a "$mainlog"
+
+echo | tee -a "$mainlog"
+
+echo | tee -a "$mainlog"
+
+echo | tee -a "$mainlog"
+
+
+
+

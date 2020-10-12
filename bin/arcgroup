@@ -1,0 +1,19 @@
+
+
+export build=$1
+
+
+$__archive/tool/bin/arc-group "$build" "$__/xcore/platform/seed/metaseed/mac-group.xcworkspace" "release_group_third" 
+$__archive/tool/bin/arc-group "$build" "$__/xcore/platform/seed/metaseed/mac-group.xcworkspace" "release_group_app"
+$__archive/tool/bin/arc-group "$build" "$__/xcore/platform/seed/metaseed/mac-group.xcworkspace" "release_group_core"
+$__archive/tool/bin/arc-group "$build" "$__/xcore/platform/seed/metaseed/mac-group.xcworkspace" "release_group_multimedia"
+$__archive/tool/bin/arc-group "$build" "$__/xcore/platform/seed/metaseed/mac-group.xcworkspace" "release_group_veriwell_multimedia"
+$__archive/tool/bin/arc-group "$build" "$__/xcore/platform/seed/metaseed/mac-group.xcworkspace" "release_group_resident"
+$__archive/tool/bin/arc-group "$build" "$__/xcore/platform/seed/metaseed/mac-group.xcworkspace" "release_group_foundation"
+$__archive/tool/bin/arc-group "$build" "$__/xcore/platform/seed/metaseed/mac-group.xcworkspace" "release_group_simple"
+$__archive/tool/bin/arc-group "$build" "$__/xcore/platform/seed/metaseed/mac-group.xcworkspace" "release_group_veriwell"
+$__archive/tool/bin/arc-group "$build" "$__/xcore/platform/seed/metaseed/mac-group.xcworkspace" "release_group_estamira"
+$__archive/tool/bin/arc-group "$build" "$__/xcore/platform/seed/metaseed/mac-group.xcworkspace" "release_group_arcade"
+$__archive/tool/bin/arc-group "$build" "$__/xcore/platform/seed/metaseed/mac-group.xcworkspace" "release_group_core_games"
+
+

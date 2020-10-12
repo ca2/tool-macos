@@ -1,0 +1,9 @@
+
+export build=$1
+
+$__archive/tool/bin/arc-item "$task" "$build" "$__/xcore/platform/seed/metaseed/mac-arcade.xcworkspace" "game" "game_of_life" 
+
+
+
+
+

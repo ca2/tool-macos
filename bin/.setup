@@ -1,0 +1,17 @@
+#!/bin/zsh
+
+
+if [[ $PATH != *"$__archive/tool/bin"* ]]; then
+  
+   export PATH="$__archive/tool/bin:$PATH"
+
+fi
+
+
+export CORE_BUILD_BASE="$__/build"
+
+
+mkdir -p "$CORE_BUILD_BASE/build"
+
+
+
