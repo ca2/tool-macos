@@ -1,0 +1,6 @@
+
+
+mkdir -p "$HOME/Library/Application Support/ca2/appmatter/$1/_matter"
+
+rsync -avzh --delete $HOME/solution/basis/source/$1/_matter/ "$HOME/Library/Application Support/ca2/appmatter/$1/_matter/"
+
