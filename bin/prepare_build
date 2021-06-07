@@ -1,0 +1,16 @@
+# Thanks for omer_usta@Twitch 
+# - declared from Turkey and oatmeal for breakfast 6:30 -
+# for this insight: 
+#
+# - compiler flags exported to environment variables to control
+# builds done at the Terminal session and it in fact tested
+# to work with brew builds (i.e. with thirdy party builds)
+# what a promising mind opening
+
+export  LDFLAGS="-mmacosx-version-min=10.9"
+export   CFLAGS="-mmacosx-version-min=10.9" 
+export CXXFLAGS="-mmacosx-version-min=10.9"
+
+export LD_RUNPATH_SEARCH_PATHS="@executable_path"
+
+
