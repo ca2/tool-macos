@@ -1,0 +1,25 @@
+
+function build_ssl
+{
+
+	cd /Users/Shared/.local/bin
+	
+
+}
+
+
+. ./prepare_build
+
+build_ssl
+
+cp -f /Users/Shared/.local/Cellar/openssl@1.1/1.1.1k/lib/libcrypto.1.1.dylib /Users/camilo/solution/basis/archive/storage-macos/library/
+cp -f /Users/Shared/.local/Cellar/openssl@1.1/1.1.1k/lib/libssl.1.1.dylib /Users/camilo/solution/basis/archive/storage-macos/library/
+
+chmod +w /Users/camilo/solution/basis/archive/storage-macos/library/libcrypto.1.1.dylib
+chmod +w /Users/camilo/solution/basis/archive/storage-macos/library/libssl.1.1.dylib
+
+#install_name_tool -change /Users/Shared/.local/Cellar/openssl@1.1/1.1.1k/lib/libcrypto.1.1.dylib @executable_path /Users/camilo/solution/basis/archive/storage-macos/library/libcrypto.1.1.dylib
+install_name_tool -change /Users/Shared/.local/Cellar/openssl@1.1/1.1.1k/lib/libcrypto.1.1.dylib @executable_path/libcrypto.1.1.dylib /Users/camilo/solution/basis/archive/storage-macos/library/libssl.1.1.dylib
+
+install_name_tool -id @executable_path/libcrypto.1.1.dylib /Users/camilo/solution/basis/archive/storage-macos/library/libcrypto.1.1.dylib
+install_name_tool -id @executable_path/libssl.1.1.dylib /Users/camilo/solution/basis/archive/storage-macos/library/libssl.1.1.dylib
