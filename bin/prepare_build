@@ -7,10 +7,15 @@
 # to work with brew builds (i.e. with thirdy party builds)
 # what a promising mind opening
 
-export  LDFLAGS="-mmacosx-version-min=10.9"
-export   CFLAGS="-mmacosx-version-min=10.9" 
-export CXXFLAGS="-mmacosx-version-min=10.9"
+LDFLAGS="-mmacosx-version-min=10.9"
+CFLAGS="-mmacosx-version-min=10.9" 
+CXXFLAGS="-mmacosx-version-min=10.9"
 
-export LD_RUNPATH_SEARCH_PATHS="@executable_path"
+export LDFLAGS
+export CFLAGS
+export CXXFLAGS
+
+
+#export LD_RUNPATH_SEARCH_PATHS="@executable_path"
 
 

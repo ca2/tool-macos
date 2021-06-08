@@ -1,11 +1,92 @@
-cp -f /Users/Shared/.local/Cellar/openssl@1.1/1.1.1k/lib/libcrypto.1.1.dylib /Users/camilo/solution/basis/archive/storage-macos/library/
-cp -f /Users/Shared/.local/Cellar/openssl@1.1/1.1.1k/lib/libssl.1.1.dylib /Users/camilo/solution/basis/archive/storage-macos/library/
 
-chmod +w /Users/camilo/solution/basis/archive/storage-macos/library/libcrypto.1.1.dylib
-chmod +w /Users/camilo/solution/basis/archive/storage-macos/library/libssl.1.1.dylib
 
-#install_name_tool -change /Users/Shared/.local/Cellar/openssl@1.1/1.1.1k/lib/libcrypto.1.1.dylib @executable_path /Users/camilo/solution/basis/archive/storage-macos/library/libcrypto.1.1.dylib
-install_name_tool -change /Users/Shared/.local/Cellar/openssl@1.1/1.1.1k/lib/libcrypto.1.1.dylib @executable_path/libcrypto.1.1.dylib /Users/camilo/solution/basis/archive/storage-macos/library/libssl.1.1.dylib
+LIBRARY_PREFIX=/Users/Shared/.local
+OPENSSL_VERSION="1.1.1k"
 
-install_name_tool -id @executable_path/libcrypto.1.1.dylib /Users/camilo/solution/basis/archive/storage-macos/library/libcrypto.1.1.dylib
-install_name_tool -id @executable_path/libssl.1.1.dylib /Users/camilo/solution/basis/archive/storage-macos/library/libssl.1.1.dylib
+
+rm -Rf $HOME/build/openssl-$OPENSSL_VERSION
+rm -Rf $HOME/build/archive/openssl-$OPENSSL_VERSION
+
+
+function build
+{
+
+
+   mkdir -p $HOME/build/
+
+
+   . $HOME/solution/basis/archive/tool-macos/bin/prepare_build
+
+
+   echo "LDFLAGS=$LDFLAGS"
+   echo "CFLAGS=$CFLAGS"
+   echo "CXXFLAGS=$CXXFLAGS"
+
+
+   cd $HOME/build/
+
+
+   curl -O https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz
+
+
+   tar -xzvf openssl-$OPENSSL_VERSION.tar.gz
+
+
+   cd openssl-$OPENSSL_VERSION
+
+
+   ./Configure darwin64-x86_64-cc -shared --prefix=$LIBRARY_PREFIX CFLAGS=$CFLAGS CXXFLAGS=$CXXFLAGS LDFLAGS=$LDFLAGS
+
+
+   make -j 8
+
+
+   #make test -j 8
+
+
+}
+
+
+build
+
+
+function stage
+{
+
+
+	cd $HOME/build/openssl-$OPENSSL_VERSION
+
+
+	chmod +w ./libcrypto.1.1.dylib
+	chmod +w ./libssl.1.1.dylib
+
+
+	install_name_tool -change $LIBRARY_PREFIX/lib/libcrypto.1.1.dylib @executable_path/libcrypto.1.1.dylib libssl.1.1.dylib
+
+	
+	install_name_tool -id @executable_path/libcrypto.1.1.dylib libcrypto.1.1.dylib
+	install_name_tool -id @executable_path/libssl.1.1.dylib libssl.1.1.dylib
+
+   
+   cd $HOME/solution/basis/archive/storage-macos/library/
+	
+	
+   cp -f $HOME/build/openssl-$OPENSSL_VERSION/libcrypto.1.1.dylib ./
+	cp -f $HOME/build/openssl-$OPENSSL_VERSION/libssl.1.1.dylib ./
+
+
+}
+
+
+stage
+
+
+mkdir -p $HOME/build/archive
+
+
+mv $HOME/build/openssl-$OPENSSL_VERSION $HOME/build/archive/openssl-$OPENSSL_VERSION
+
+
+times
+
+
