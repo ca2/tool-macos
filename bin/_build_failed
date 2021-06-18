@@ -40,7 +40,7 @@ cat "$mainlog" >> "$failedmail"
 
 mail -s "$emailtitle" production_failed@ca2.email < "$failedmail"
 
-post_status stage@ca2.cc "[$build] 😡 macOS Build Failed!!"
+post_status stage@ca2.software "[$build] 😡 macOS Build Failed!!"
 
 
 

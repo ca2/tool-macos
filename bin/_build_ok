@@ -26,7 +26,7 @@ echo "Build Log: $mainlog" >> "$successmail"
 
 mail -s "$emailtitle" production_success@ca2.email < "$successmail"
 
-post_status stage@ca2.cc "[$build] 😀 macOS Build Succeeded!!"
+post_status stage@ca2.software "[$build] 😀 macOS Build Succeeded!!"
 
 
 

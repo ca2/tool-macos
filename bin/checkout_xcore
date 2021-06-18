@@ -1,15 +1,15 @@
 #!/bin/zsh
 
 
-svn checkout https://repos.ca2.cc/app/basis /xcore/app
-svn checkout https://repos.ca2.cc/app-cidadedecuritiba/basis /xcore/app-cidadedecuritiba
-svn checkout https://repos.ca2.cc/app-core/basis /xcore/app-core
-svn checkout https://repos.ca2.cc/app-veriwell/basis /xcore/app-veriwell
-svn checkout https://repos.ca2.cc/shared/app-simple/basis /xcore/app-simple
-svn checkout https://repos.ca2.cc/ca2/basis /xcore/ca2
-svn checkout https://repos.ca2.cc/design/basis /xcore/design
-svn checkout https://repos.ca2.cc/game/basis /xcore/game
-svn checkout https://repos.ca2.cc/include/basis /xcore/include
-svn checkout https://repos.ca2.cc/platform-macos/basis /xcore/platform
-svn checkout https://repos.ca2.cc/third/basis /xcore/third
+svn checkout https://repos.ca2.software/app/basis /xcore/app
+svn checkout https://repos.ca2.software/app-cidadedecuritiba/basis /xcore/app-cidadedecuritiba
+svn checkout https://repos.ca2.software/app-core/basis /xcore/app-core
+svn checkout https://repos.ca2.software/app-veriwell/basis /xcore/app-veriwell
+svn checkout https://repos.ca2.software/shared/app-simple/basis /xcore/app-simple
+svn checkout https://repos.ca2.software/ca2/basis /xcore/ca2
+svn checkout https://repos.ca2.software/design/basis /xcore/design
+svn checkout https://repos.ca2.software/game/basis /xcore/game
+svn checkout https://repos.ca2.software/include/basis /xcore/include
+svn checkout https://repos.ca2.software/platform-macos/basis /xcore/platform
+svn checkout https://repos.ca2.software/third/basis /xcore/third
 

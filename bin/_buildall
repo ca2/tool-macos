@@ -49,7 +49,7 @@ buildall () {
    
    mail -s "$emailtitle" production@ca2.email < $startmail
 
-   post_status stage@ca2.cc "[$build] 🥁 macOS Build Started!!"   
+   post_status stage@ca2.software "[$build] 🥁 macOS Build Started!!"   
 
    svn cleanup $__/xcore/* 2>&1 | tee -a "$mainlog"
 
