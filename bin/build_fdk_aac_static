@@ -1,0 +1,30 @@
+#!/bin/bash
+
+
+function build_static()
+{
+
+   BASEDIR=$HOME/build_static
+   PREFIX=$BASEDIR/static
+
+   mkdir -p $PREFIX
+
+   export MACOSX_DEPLOYMENT_TARGET=10.9
+
+   cd $BASEDIR
+
+   echo "Fetching FDK AAC..."
+   git clone https://github.com/mstorsjo/fdk-aac.git fdk-aac
+   cd fdk-aac
+   echo "Building FDK AAC..."
+   ./autogen.sh
+   ./configure --prefix=$PREFIX --enable-static
+   make 
+   make install
+
+}
+
+
+build_static
+
+

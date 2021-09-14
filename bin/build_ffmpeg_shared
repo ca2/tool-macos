@@ -1,0 +1,35 @@
+#!/bin/bash
+
+
+function build_shared()
+{
+
+
+   build_x264_shared
+
+   build_fdk_aac_shared
+
+   build_lame_shared
+
+   build_freetype_shared
+
+   cd $BASEDIR
+
+   echo "Fetching FFmpeg..."
+   git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg
+   cd ffmpeg
+   ./configure --extra-cflags="-I$PREFIX/include" --extra-ldflags="-L$PREFIX/lib" --bindir="$PREFIX/bin" --prefix=$PREFIX --libdir=@executable_path --enable-gpl --enable-nonfree --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libx264 --enable-pic --enable-shared
+
+   mkdir -p $HOME/solution/basis/archive/storage-macos/library/x86_64/Debug
+   mkdir -p $HOME/solution/basis/archive/storage-macos/library/x86_64/Release
+   cp @executable_path/* $HOME/solution/basis/archive/storage-macos/library/x86_64/Debug
+   cp @executable_path/* $HOME/solution/basis/archive/storage-macos/library/x86_64/Release
+
+
+}
+
+
+build_shared
+
+
+

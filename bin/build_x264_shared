@@ -1,0 +1,31 @@
+#!/bin/bash
+
+
+function build_shared()
+{
+
+   BASEDIR=$HOME/build_shared
+   PREFIX=$BASEDIR/shared
+
+   export MACOSX_DEPLOYMENT_TARGET=10.9
+   export LD_RUNPATH_SEARCH_PATHS=@executable_path
+   export INSTALL_PATH=@executable_path
+
+   cd $BASEDIR
+
+   echo "Fetching x264..."
+   git clone https://code.videolan.org/videolan/x264.git x264
+   cd x264
+   echo "Building x264..."
+   ./configure --prefix=$PREFIX --enable-pic --enable-shared 
+   make
+   make install
+
+
+}
+
+
+build_shared
+
+
+

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+
+function build_static()
+{
+
+
+   BASEDIR=$HOME/build_static
+   PREFIX=$BASEDIR/static
+
+   mkdir -p $PREFIX
+
+   export MACOSX_DEPLOYMENT_TARGET=10.9
+
+   cd $BASEDIR
+
+   echo "Fetching Lame..."
+   git clone https://github.com/zlargon/lame.git lame
+   cd lame
+   echo "Building Lame..."
+   ./configure --prefix=$PREFIX --enable-static
+   make 
+   make install
+
+
+}
+
+
+build_static
+
+
