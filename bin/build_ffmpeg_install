@@ -49,6 +49,15 @@ function install_shared()
     mv $BASEDIR/ffmpeg/@executable_path/libswscale.6.1.100.dylib $BASEDIR/ffmpeg/@executable_path/libswscale.dylib
     install_name_tool -id @executable_path/libswscale.dylib $BASEDIR/ffmpeg/@executable_path/libswscale.dylib
 
+
+   install_name_tool -change @executable_path/libavcodec.59.dylib @executable_path/libavcodec.dylib $BASEDIR/ffmpeg/@executable_path/libavformat.dylib
+   install_name_tool -change @executable_path/libswresample.4.dylib @executable_path/libswresample.dylib $BASEDIR/ffmpeg/@executable_path/libavformat.dylib
+   install_name_tool -change @executable_path/libavutil.57.dylib @executable_path/libavutil.dylib $BASEDIR/ffmpeg/@executable_path/libavformat.dylib
+   install_name_tool -change @executable_path/libswresample.4.dylib @executable_path/libswresample.dylib $BASEDIR/ffmpeg/@executable_path/libavcodec.dylib
+   install_name_tool -change @executable_path/libavutil.57.dylib @executable_path/libavutil.dylib $BASEDIR/ffmpeg/@executable_path/libavcodec.dylib
+   install_name_tool -change @executable_path/libavutil.57.dylib @executable_path/libavutil.dylib $BASEDIR/ffmpeg/@executable_path/libswresample.dylib
+   install_name_tool -change @executable_path/libavutil.57.dylib @executable_path/libavutil.dylib $BASEDIR/ffmpeg/@executable_path/libswscale.dylib
+
    mkdir -p $HOME/solution/basis/archive/storage-macos/library/x86_64/Debug
    mkdir -p $HOME/solution/basis/archive/storage-macos/library/x86_64/Release
    cp $PREFIX/lib/* $HOME/solution/basis/archive/storage-macos/library/x86_64/Debug
