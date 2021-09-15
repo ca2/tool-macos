@@ -1,0 +1,34 @@
+#!/bin/bash
+
+
+function build_shared()
+{
+
+   BASEDIR=$HOME/build_shared
+   PREFIX=$BASEDIR/shared
+
+   export MACOSX_DEPLOYMENT_TARGET=10.9
+
+   mkdir -p $PREFIX
+
+   cd $BASEDIR
+
+   echo "Fetching Lame-Linux Mp3 Encoder..."
+   git clone https://github.com/zlargon/lame.git lame
+   cd lame
+   echo "Building Lame-Linux Mp3 Encoder..."
+   ./configure --prefix=$PREFIX --enable-shared 
+   make 
+   make install
+   unlink $PREFIX/lib/libmp3lame.dylib
+   mv $PREFIX/lib/libmp3lame.0.dylib $PREFIX/lib/libmp3lame.dylib
+   install_name_tool -id @executable_path/libmp3lame.dylib $PREFIX/lib/libmp3lame.dylib
+
+
+}
+
+
+build_shared
+
+
+

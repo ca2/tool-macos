@@ -3,21 +3,21 @@
 
 function build_static()
 {
-   
+
 
    BASEDIR=$HOME/build_static
    PREFIX=$BASEDIR/static
 
-   mkdir -p $PREFIX
-
    export MACOSX_DEPLOYMENT_TARGET=10.9
+
+   mkdir -p $PREFIX
 
    cd $BASEDIR
 
-   echo "Fetching freetype..."
-   git clone https://github.com/freetype/freetype.git freetype
-   cd freetype
-   echo "Building freetype..."
+   echo "Fetching Lame-Linux Mp3 Encoder..."
+   git clone https://github.com/zlargon/lame.git lame
+   cd lame
+   echo "Building Lame-Linux Mp3 Encoder..."
    ./configure --prefix=$PREFIX --enable-static
    make 
    make install

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+
+function build_shared()
+{
+
+
+   BASEDIR=$HOME/build_shared
+   PREFIX=$BASEDIR/shared
+
+   export MACOSX_DEPLOYMENT_TARGET=10.9
+
+   mkdir -p $PREFIX
+
+   cd $BASEDIR
+
+   echo "Fetching Fudedck-Linux AAC Encoder..."
+   git clone https://github.com/mstorsjo/fdk-aac.git fdk-aac
+   cd fdk-aac
+   echo "Building Fudedck-Linux AAC Encoder..."
+   ./autogen.sh
+   ./configure --prefix=$PREFIX --enable-shared
+   make -j 8
+   make install
+   unlink $PREFIX/lib/libfdk-aac.dylib
+   mv $PREFIX/lib/libfdk-aac.2.dylib $PREFIX/lib/libfdk-aac.dylib
+   install_name_tool -id @executable_path/libfdk-aac.dylib $PREFIX/lib/libfdk-aac.dylib
+
+
+}
+
+
+build_shared
+
+
+

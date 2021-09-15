@@ -7,9 +7,9 @@ function build_static()
    BASEDIR=$HOME/build_static
    PREFIX=$BASEDIR/static
 
-   mkdir -p $PREFIX
-
    export MACOSX_DEPLOYMENT_TARGET=10.9
+
+   mkdir -p $PREFIX
 
    cd $BASEDIR
 

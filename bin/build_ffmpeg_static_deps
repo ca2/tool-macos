@@ -1,0 +1,22 @@
+#!/bin/bash
+
+
+function build_static()
+{
+
+
+   #_build_x264_static
+
+   #_build_fdk_aac_static
+
+   #_build_lame_static
+
+   #_build_freetype_static
+
+
+}
+
+
+build_static
+
+

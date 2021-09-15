@@ -1,0 +1,35 @@
+#!/bin/bash
+
+
+function build_shared()
+{
+
+   BASEDIR=$HOME/build_shared
+   PREFIX=$BASEDIR/shared
+
+   export MACOSX_DEPLOYMENT_TARGET=10.9
+
+   mkdir -p $PREFIX
+
+   cd $BASEDIR
+
+   echo "Fetching Poor-Baby-Linux freetype..."
+   git clone https://github.com/freetype/freetype.git freetype
+   cd freetype
+   echo "Building Poor-Baby-Linux freetype..."
+   ./autogen.sh
+   ./configure --prefix=$PREFIX --enable-pic --enable-shared 
+   make -j 8
+   make install
+   unlink $PREFIX/lib/libfreetype.dylib
+   mv $PREFIX/lib/libfreetype.6.dylib $PREFIX/lib/libfreetype.dylib
+   install_name_tool -id @executable_path/libfreetype.dylib $PREFIX/lib/libfreetype.dylib
+
+
+}
+
+
+build_shared
+
+
+

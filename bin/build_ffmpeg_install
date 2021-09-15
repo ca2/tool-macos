@@ -1,0 +1,64 @@
+#!/bin/bash
+
+
+
+function install_shared()
+{
+
+
+   BASEDIR=$HOME/build_shared
+   PREFIX=$BASEDIR/shared
+
+   export MACOSX_DEPLOYMENT_TARGET=10.9
+   #export LD_RUNPATH_SEARCH_PATHS=@executable_path
+   #export INSTALL_PATH=@executable_path
+   export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig/
+
+   cd $BASEDIR
+
+    unlink $BASEDIR/ffmpeg/@executable_path/libavcodec.59.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libavcodec.dylib
+    mv $BASEDIR/ffmpeg/@executable_path/libavcodec.59.7.103.dylib $BASEDIR/ffmpeg/@executable_path/libavcodec.dylib
+    install_name_tool -id @executable_path/libavcodec.dylib $BASEDIR/ffmpeg/@executable_path/libavcodec.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libavdevice.59.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libavdevice.dylib
+    mv $BASEDIR/ffmpeg/@executable_path/libavdevice.59.0.101.dylib $BASEDIR/ffmpeg/@executable_path/libavdevice.dylib
+    install_name_tool -id @executable_path/libavdevice.dylib $BASEDIR/ffmpeg/@executable_path/libavdevice.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libavfilter.8.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libavfilter.dylib
+    mv $BASEDIR/ffmpeg/@executable_path/libavfilter.8.9.100.dylib $BASEDIR/ffmpeg/@executable_path/libavfilter.dylib
+    install_name_tool -id @executable_path/libavfilter.dylib $BASEDIR/ffmpeg/@executable_path/libavfilter.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libavformat.59.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libavformat.dylib
+    mv $BASEDIR/ffmpeg/@executable_path/libavformat.59.5.100.dylib $BASEDIR/ffmpeg/@executable_path/libavformat.dylib
+    install_name_tool -id @executable_path/libavformat.dylib $BASEDIR/ffmpeg/@executable_path/libavformat.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libavutil.57.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libavutil.dylib
+    mv $BASEDIR/ffmpeg/@executable_path/libavutil.57.5.100.dylib $BASEDIR/ffmpeg/@executable_path/libavutil.dylib
+    install_name_tool -id @executable_path/libavutil.dylib $BASEDIR/ffmpeg/@executable_path/libavutil.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libpostproc.56.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libpostproc.dylib
+    mv $BASEDIR/ffmpeg/@executable_path/libpostproc.56.0.100.dylib $BASEDIR/ffmpeg/@executable_path/libpostproc.dylib
+    install_name_tool -id @executable_path/libpostproc.dylib $BASEDIR/ffmpeg/@executable_path/libpostproc.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libswresample.4.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libswresample.dylib
+    mv $BASEDIR/ffmpeg/@executable_path/libswresample.4.0.100.dylib $BASEDIR/ffmpeg/@executable_path/libswresample.dylib
+    install_name_tool -id @executable_path/libswresample.dylib $BASEDIR/ffmpeg/@executable_path/libswresample.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libswscale.6.dylib
+    unlink $BASEDIR/ffmpeg/@executable_path/libswscale.dylib
+    mv $BASEDIR/ffmpeg/@executable_path/libswscale.6.1.100.dylib $BASEDIR/ffmpeg/@executable_path/libswscale.dylib
+    install_name_tool -id @executable_path/libswscale.dylib $BASEDIR/ffmpeg/@executable_path/libswscale.dylib
+
+   mkdir -p $HOME/solution/basis/archive/storage-macos/library/x86_64/Debug
+   mkdir -p $HOME/solution/basis/archive/storage-macos/library/x86_64/Release
+   cp $PREFIX/lib/* $HOME/solution/basis/archive/storage-macos/library/x86_64/Debug
+   cp $PREFIX/lib/* $HOME/solution/basis/archive/storage-macos/library/x86_64/Release
+   cp -Rf $PREFIX/include/* $HOME/solution/basis/archive/third-macos/include
+
+
+}
+
+
+install_shared
+
+

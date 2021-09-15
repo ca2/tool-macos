@@ -5,21 +5,23 @@ function build_static()
 {
 
    BASEDIR=$HOME/build_static
-   PREFIX=$BASEDIR/static
-
-   mkdir -p $PREFIX
+   PREFIX=$HOME/build_shared/shared
 
    export MACOSX_DEPLOYMENT_TARGET=10.9
 
+   mkdir -p $PREFIX
+
+   mkdir -p $BASEDIR
+
    cd $BASEDIR
 
-   echo "Fetching FDK AAC..."
+   echo "Fetching Fucked-Linux AAC Encoder..."
    git clone https://github.com/mstorsjo/fdk-aac.git fdk-aac
    cd fdk-aac
-   echo "Building FDK AAC..."
+   echo "Building Fucked-Linux AAC Encoder..."
    ./autogen.sh
    ./configure --prefix=$PREFIX --enable-static
-   make 
+   make -j 8
    make install
 
 }

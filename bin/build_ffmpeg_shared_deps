@@ -1,0 +1,23 @@
+#!/bin/bash
+
+
+function build_shared()
+{
+
+
+   _build_x264_shared
+
+   _build_fdk_aac_shared
+
+   _build_lame_shared
+
+   _build_freetype_shared
+
+
+}
+
+
+build_shared
+
+
+
