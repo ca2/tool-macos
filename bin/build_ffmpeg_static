@@ -5,21 +5,11 @@ function build_static()
 {
 
 
-   build_x264_static
-
-   build_fdk_aac_static
-
-   build_lame_static
-
-   build_freetype_static
-
    BASEDIR=$HOME/build_static
-   
    PREFIX=$BASEDIR/static
 
-   mkdir -p $PREFIX
-
    export MACOSX_DEPLOYMENT_TARGET=10.9
+   export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig/
 
    cd $BASEDIR
 
@@ -27,6 +17,8 @@ function build_static()
    git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg
    cd ffmpeg
    ./configure --prefix=$PREFIX --extra-cflags="-I$PREFIX/include" --extra-ldflags="-L$PREFIX/lib" --bindir="$PREFIX/bin" --enable-gpl --enable-nonfree --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libx264 --enable-static
+   make -j 8
+   make install
 
    mkdir -p $HOME/solution/basis/archive/storage-macos/library/x86_64/Debug
    mkdir -p $HOME/solution/basis/archive/storage-macos/library/x86_64/Release

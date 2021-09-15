@@ -1,9 +1,12 @@
 #!/bin/bash
 
+#build_ffmpeg_static_deps
 
-build_ffmpeg_static
+#build_ffmpeg_static
 
-build ffmpeg_shared
+build_ffmpeg_shared_deps
+
+build_ffmpeg_shared
 
 
 
