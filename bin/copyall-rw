@@ -5,6 +5,7 @@ rsync -avzh --delete $HOME/solution/basis/archive/platform-macos/_matter/ "$HOME
 
 ./copyall-item app
 ./copyall-item app-cidadedecuritiba
+./copyall-item app-complex
 ./copyall-item app-core
 ./copyall-item app-simple
 ./copyall-item app-veriwell
