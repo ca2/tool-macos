@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer/
+
+
+#xcodebuild -workspace /Users/camilo/solution/basis/archive/platform-macos/_seed/mac-all.xcworkspace -scheme _app_app archive
+
+
+xcodebuild -workspace /Users/camilo/solution/basis/archive/platform-macos/_seed/mac-all.xcworkspace -scheme _app_app archive
