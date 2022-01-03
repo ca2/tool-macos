@@ -1,9 +1,113 @@
 #!/bin/zsh
 
+
+BASE_DIR=$1
+
+if [ -z "$BASE_DIR" ]; then
+
+BASE_DIR=$HOME/solution/basis
+
+fi
+
+
+archive()
+{
+
+   ROOT=$1
+   APP=$2
+
+   APP_REL="_${ROOT}_${APP}"
+
+   if [ ! -d "/Users/camilo/archive/$ROOT/$APP.xcarchive" ]; then
+
+      xcodebuild -workspace /Users/camilo/solution/basis/archive/platform-macos/_seed/mac-all.xcworkspace -scheme $APP_REL archive -archivePath /Users/camilo/archive/$ROOT/$APP.xcarchive
+
+   fi
+
+   xcodebuild -exportArchive -archivePath /Users/camilo/archive/$ROOT/$APP.xcarchive -exportPath /Users/camilo/output/$ROOT/ -exportOptionsPlist /Users/camilo/solution/basis/archive/platform-macos/exportOptions.plist
+
+   if [ ! -d /Volumes/store/macos/$ROOT ]; then
+
+      mkdir -p "/Volumes/store/macos/$ROOT"
+
+   fi
+
+   cd /Users/camilo/output/$ROOT
+
+   zip -FSr /Volumes/store/macos/$ROOT/$APP.zip $APP_REL.app
+
+}
+
 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer/
 
+
+cd $BASE_DIR
+
+APPLICATION_MATTER_LIST_FILE_PATH="$BASE_DIR/application_matter_list.txt"
+
+find $BASE_DIR -name application_matter.txt -print > $APPLICATION_MATTER_LIST_FILE_PATH
 
 #xcodebuild -workspace /Users/camilo/solution/basis/archive/platform-macos/_seed/mac-all.xcworkspace -scheme _app_app archive
 
 
-xcodebuild -workspace /Users/camilo/solution/basis/archive/platform-macos/_seed/mac-all.xcworkspace -scheme _app_app archive
+
+
+while read line; do
+
+   line=$(echo $line)
+
+   APP_DIR=$(dirname $line)
+
+   APP_NAME=$(basename $APP_DIR)
+
+   ROOT_DIR=$(dirname $APP_DIR)
+
+   ROOT=$(basename $ROOT_DIR)
+
+   APP_ID="$ROOT/$APP_NAME"
+
+
+
+   LAYER=`echo $LAYER`
+
+   if [ -z "$LAYER" ]; then
+
+      LAYER="core"
+
+   fi
+
+   echo "------------------------------------------------------"
+   echo "$APP_ID"
+
+   #application_build_helper -package "$APP_DIR" "$OUTPUT_DIR"
+
+
+   archive "$ROOT" "$APP_NAME"
+   # start_zip $APP_REL
+
+   # cd $(dirname $LAYER_FILE_PATH)
+   # zip $APP_PACKAGE_ZIP_PATH $(basename $LAYER_FILE_PATH)
+
+   # cd $OUTPUT_DIR
+   # zip $APP_PACKAGE_ZIP_PATH "_${APP_REL}"
+   # zip $APP_PACKAGE_ZIP_PATH "lib${APP_REL}.so"
+
+   # while read depline; do
+
+   #    if [ "$depline" = "node_linux" ]; then
+
+   #       :      
+
+   #    else
+
+   #       zip $APP_PACKAGE_ZIP_PATH "lib${depline}.so"
+
+   #    fi
+
+   # done <$DEPS_FILE_PATH   
+   
+done <$APPLICATION_MATTER_LIST_FILE_PATH
+
+
+
+
