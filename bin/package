@@ -9,37 +9,9 @@ BASE_DIR=$HOME/solution/basis
 
 fi
 
-
-archive()
-{
-
-   ROOT=$1
-   APP=$2
-
-   APP_REL="_${ROOT}_${APP}"
-
-   if [ ! -d "/Users/camilo/archive/$ROOT/$APP.xcarchive" ]; then
-
-      xcodebuild -workspace /Users/camilo/solution/basis/archive/platform-macos/_seed/mac-all.xcworkspace -scheme $APP_REL archive -archivePath /Users/camilo/archive/$ROOT/$APP.xcarchive
-
-   fi
-
-   xcodebuild -exportArchive -archivePath /Users/camilo/archive/$ROOT/$APP.xcarchive -exportPath /Users/camilo/output/$ROOT/ -exportOptionsPlist /Users/camilo/solution/basis/archive/platform-macos/exportOptions.plist
-
-   if [ ! -d /Volumes/store/macos/$ROOT ]; then
-
-      mkdir -p "/Volumes/store/macos/$ROOT"
-
-   fi
-
-   cd /Users/camilo/output/$ROOT
-
-   zip -FSr /Volumes/store/macos/$ROOT/$APP.zip $APP_REL.app
-
-}
+. _archive
 
 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer/
-
 
 cd $BASE_DIR
 

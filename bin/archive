@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+
+. _archive
+
+
+archive "$1" "$2"
+
+
+
