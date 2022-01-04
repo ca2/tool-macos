@@ -19,15 +19,15 @@ archive()
 
    xcodebuild -exportArchive -archivePath /Users/camilo/archive/$ROOT/$APP.xcarchive -exportPath /Users/camilo/output/$ROOT/ -exportOptionsPlist /Users/camilo/solution/basis/archive/platform-macos/exportOptions.plist
 
-   if [ ! -d /Volumes/store/macos/$ROOT ]; then
+   if [ ! -d $HOME/store/macos/$ROOT ]; then
 
-      mkdir -p "/Volumes/store/macos/$ROOT"
+      mkdir -p "$HOME/store/macos/$ROOT"
 
    fi
 
    cd /Users/camilo/output/$ROOT
 
-   zip -FSr /Volumes/store/macos/$ROOT/$APP.zip $APP_REL.app
+   zip -FSr $HOME/store/macos/$ROOT/$APP.zip $APP_REL.app
 
 }
 
