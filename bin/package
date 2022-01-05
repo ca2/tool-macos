@@ -19,8 +19,6 @@ fi
 
 . _archive
 
-sudo xcode-select -s /Applications/Xcode.app/Contents/Developer/
-
 cd $BASE_DIR
 
 APPLICATION_MATTER_LIST_FILE_PATH="$BASE_DIR/application_matter_list.txt"
