@@ -46,16 +46,6 @@ while read line; do
 
    APP_ID="$ROOT/$APP_NAME"
 
-
-
-   LAYER=`echo $LAYER`
-
-   if [ -z "$LAYER" ]; then
-
-      LAYER="core"
-
-   fi
-
    echo "------------------------------------------------------"
    echo "$APP_ID"
 
