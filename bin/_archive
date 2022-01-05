@@ -11,15 +11,15 @@ dt3=$(echo "$dt2-3600*$dh" | bc)
 dm=$(echo "$dt3/60" | bc)
 ds=$(echo "$dt3-60*$dm" | bc)
 
-if [ ! "$dd" eq "0"]; then
+if [[ $dd -ne 0 ]]; then
 
    LC_NUMERIC=C printf "%d days %02d hours %02d minutes %02.4f seconds\n" $dd $dh $dm $ds
 
-elif [ ! "$dh" eq "0"]; then
+elif [[ $dh -ne 0 ]]; then
 
    LC_NUMERIC=C printf "%02d hours %02d minutes %02.4f seconds\n" $dh $dm $ds
 
-elif [ ! "$dm" eq "0"]; then
+elif [[ $dm -ne 0 ]]; then
 
    LC_NUMERIC=C printf "%02d minutes %02.4f seconds\n" $dm $ds
 
