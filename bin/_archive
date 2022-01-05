@@ -1,23 +1,83 @@
 #!/bin/zsh
 
 
+print_duration()
+{
+dt=$(echo "$2 - $1" | bc)
+dd=$(echo "$dt/86400" | bc)
+dt2=$(echo "$dt-86400*$dd" | bc)
+dh=$(echo "$dt2/3600" | bc)
+dt3=$(echo "$dt2-3600*$dh" | bc)
+dm=$(echo "$dt3/60" | bc)
+ds=$(echo "$dt3-60*$dm" | bc)
+
+if [ ! "$dd" eq "0"]; then
+
+   LC_NUMERIC=C printf "%d days %02d hours %02d minutes %02.4f seconds\n" $dd $dh $dm $ds
+
+elif [ ! "$dh" eq "0"]; then
+
+   LC_NUMERIC=C printf "%02d hours %02d minutes %02.4f seconds\n" $dh $dm $ds
+
+elif [ ! "$dm" eq "0"]; then
+
+   LC_NUMERIC=C printf "%02d minutes %02.4f seconds\n" $dm $ds
+
+else
+
+   LC_NUMERIC=C printf "%02.4f seconds\n" $ds
+
+fi
+
+}
+
+
+#   brew install coreutils for gdate
+
+
+
 archive()
 {
 
+
    ROOT=$1
    APP=$2
+   
+   APP_DIR="${ROOT}/${APP}"
 
    APP_REL1="_${ROOT}_${APP}"
 
    APP_REL=${APP_REL1//[\/-]/_} 
 
+   mkdir -p "$HOME/build/$BUILD_DATETIME/$APP_DIR"
+   mkdir -p "$HOME/build_summary/$BUILD_DATETIME/$APP_DIR"
+   t1=$(gdate -u +%s.%N)
+   date1=$(gdate -u '+%F +%T +%N')
+   echo "start" > "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+   echo "$date1" >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+   echo "" >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+
+   ARCHIVE_LOG_FILE="$HOME/build/$BUILD_DATETIME/$APP_DIR/archive.txt"
+
    if [ ! -d "/Users/camilo/archive/$ROOT/$APP.xcarchive" ]; then
 
-      xcodebuild -workspace /Users/camilo/solution/basis/archive/platform-macos/_seed/mac-all.xcworkspace -scheme $APP_REL archive -archivePath /Users/camilo/archive/$ROOT/$APP.xcarchive
+      xcodebuild -workspace /Users/camilo/solution/basis/archive/platform-macos/_seed/mac-all.xcworkspace -scheme $APP_REL archive -archivePath /Users/camilo/archive/$ROOT/$APP.xcarchive 2>&1 | tee "$ARCHIVE_LOG_FILE"
 
    fi
 
-   xcodebuild -exportArchive -archivePath /Users/camilo/archive/$ROOT/$APP.xcarchive -exportPath /Users/camilo/output/$ROOT/ -exportOptionsPlist /Users/camilo/solution/basis/archive/platform-macos/exportOptions.plist
+
+   t2=$(gdate -u +%s.%N)
+   date2=$(gdate -u '+%F +%T +%N')
+
+   echo "archive" >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+   echo "$date2" >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+   print_duration $t1 $t2 >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+   echo "" >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+
+
+   EXPORT_LOG_FILE="$HOME/build/$BUILD_DATETIME/$APP_DIR/export.txt"
+
+   xcodebuild -exportArchive -archivePath /Users/camilo/archive/$ROOT/$APP.xcarchive -exportPath /Users/camilo/output/$ROOT/ -exportOptionsPlist /Users/camilo/solution/basis/archive/platform-macos/exportOptions.plist 2>&1 | tee "$EXPORT_LOG_FILE"
 
    if [ ! -d $HOME/store/macos/$ROOT ]; then
 
@@ -25,9 +85,38 @@ archive()
 
    fi
 
+   t3=$(gdate -u +%s.%N)
+   date3=$(gdate -u '+%F +%T +%N')
+
+   echo "export" >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+   echo "$date3" >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+   print_duration $t2 $t3 >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+   echo "" >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+
+
    cd /Users/camilo/output/$ROOT
 
-   zip -FSr $HOME/store/macos/$ROOT/$APP.zip $APP_REL.app
+   ZIP_LOG_FILE="$HOME/build/$BUILD_DATETIME/$APP_DIR/zip.txt"
+
+   zip -FSr $HOME/store/macos/$ROOT/$APP.zip $APP_REL.app 2>&1 | tee "$ZIP_LOG_FILE"
+
+   t4=$(gdate -u +%s.%N)
+   date4=$(gdate -u '+%F +%T +%N')
+
+   echo "archive" >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+   echo "$date4" >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+   print_duration $t3 $t4 >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+   echo "" >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+
+   echo "total" >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+   print_duration $t1 $t4 >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+   echo "" >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+   echo "" >> "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt"
+
+   cat "$HOME/build/$BUILD_DATETIME/$APP_DIR/_times.txt" > "$HOME/build_summary/$BUILD_DATETIME/$APP_DIR/__summary.txt"
+   cat "$HOME/build/$BUILD_DATETIME/$APP_DIR/archive.txt" >> "$HOME/build_summary/$BUILD_DATETIME/$APP_DIR/__summary.txt"
+   cat "$HOME/build/$BUILD_DATETIME/$APP_DIR/export.txt" >> "$HOME/build_summary/$BUILD_DATETIME/$APP_DIR/__summary.txt"
+   cat "$HOME/build/$BUILD_DATETIME/$APP_DIR/zip.txt" >> "$HOME/build_summary/$BUILD_DATETIME/$APP_DIR/__summary.txt"
 
 }
 

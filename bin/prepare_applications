@@ -128,10 +128,7 @@ while read line; do
 
    touch "$APP_DIR/application_matter.txt" 
 
- 
- 
-
-   #application_build_helper "$APP_DIR" 
+   $HOME/bin/application_build_helper "$APP_DIR" 
 
  
  
