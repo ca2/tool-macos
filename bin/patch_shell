@@ -1,0 +1,85 @@
+#!/bin/bash
+
+
+. $HOME/solution/basis/operating-system/tool-linux/bin/_distro__desktop_environment_and_release
+
+
+if [ "$__SYSTEM_DISTRO_FAMILY" = "debian" ]; then
+
+   RC_FILE="$HOME/.profile"
+
+   if [ ! -f "$RC_FILE" ]; then
+
+
+      touch $RC_FILE 
+
+
+   fi
+
+elif [ "$SHELL" = "/bin/bash" ]; then
+
+   RC_FILE="$HOME/.bashrc"
+
+   if [ ! -f "$RC_FILE" ]; then
+
+
+      echo "#!$SHELL" > $RC_FILE 
+
+
+   fi
+
+fi
+
+
+
+
+if grep -q "# ca2 patch_shell" "$RC_FILE"; then
+
+
+   echo "\"$RC_FILE\" is already patched."
+
+
+else
+
+
+   echo "" >> $RC_FILE
+   echo "" >> $RC_FILE
+   echo "" >> $RC_FILE
+   echo "" >> $RC_FILE
+   echo "# ca2 patch_shell" >> $RC_FILE
+   echo "" >> $RC_FILE
+   echo "" >> $RC_FILE
+   echo "PATH=\$HOME/solution/basis/operating-system/tool-linux/bin:\$PATH" >> $RC_FILE
+   echo "" >> $RC_FILE
+   echo "" >> $RC_FILE
+   echo "export PATH" >> $RC_FILE
+   echo "" >> $RC_FILE
+   echo "" >> $RC_FILE
+   echo ". _distro__desktop_environment_and_release" >> $RC_FILE
+   echo "" >> $RC_FILE
+   echo "" >> $RC_FILE
+   echo "# end ca2 patch_shell + 4 new lines" >> $RC_FILE
+   echo "" >> $RC_FILE
+   echo "" >> $RC_FILE
+   echo "" >> $RC_FILE
+   echo "" >> $RC_FILE
+
+   echo "Successfully patched \"$RC_FILE\""
+
+
+fi
+
+if [ ! -d $HOME/.config/systemd/user/ ]; then
+
+   mkdir -p $HOME/.config/systemd/user/
+
+fi
+
+cp $HOME/solution/basis/operating-system/tool-linux/service/build.service $HOME/.config/systemd/user/build.service
+
+
+
+systemctl --user enable build
+
+
+
