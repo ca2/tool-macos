@@ -25,7 +25,7 @@ APPLICATION_MATTER_LIST_FILE_PATH="$BASE_DIR/application_matter_list.txt"
 
 find $BASE_DIR -name application_matter.txt -print > $APPLICATION_MATTER_LIST_FILE_PATH
 
-#xcodebuild -workspace /Users/camilo/solution/basis/archive/platform-macos/_seed/mac-all.xcworkspace -scheme _app_app archive
+#xcodebuild -workspace /Users/camilo/solution/basis/operating-system/operating-system-macos/_seed/mac-all.xcworkspace -scheme _app_app archive
 
 
 

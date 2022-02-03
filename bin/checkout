@@ -33,11 +33,13 @@ checkout .
 checkout operating-system
 
 
-checkout operating-system/operating-system-linux
+checkout operating-system/operating-system-apple
+checkout operating-system/operating-system-ios
+checkout operating-system/operating-system-macos
 checkout operating-system/operating-system-posix
-checkout operating-system/storage-linux
-checkout operating-system/third-linux
-checkout operating-system/tool-linux
+checkout operating-system/storage-macos
+checkout operating-system/third-macos
+checkout operating-system/tool-macos
 
 checkout source
 

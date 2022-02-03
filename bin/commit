@@ -27,11 +27,13 @@ commit()
 }
 
 
-commit operating-system/operating-system-linux
+commit operating-system/operating-system-apple
+commit operating-system/operating-system-ios
+commit operating-system/operating-system-macos
 commit operating-system/operating-system-posix
-commit operating-system/storage-linux
-commit operating-system/third-linux
-commit operating-system/tool-linux
+commit operating-system/storage-macos
+commit operating-system/third-macos
+commit operating-system/tool-macos
 
 
 commit operating-system

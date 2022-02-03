@@ -61,7 +61,7 @@ archive()
 
    if [ ! -d "/Users/camilo/archive/$ROOT/$APP.xcarchive" ]; then
 
-      xcodebuild -workspace /Users/camilo/solution/basis/archive/platform-macos/_seed/mac-all.xcworkspace -scheme $APP_REL archive -archivePath /Users/camilo/archive/$ROOT/$APP.xcarchive 2>&1 | tee "$ARCHIVE_LOG_FILE"
+      xcodebuild -workspace /Users/camilo/solution/basis/operating-system/operating-system-macos/_seed/mac-all.xcworkspace -scheme $APP_REL archive -archivePath /Users/camilo/archive/$ROOT/$APP.xcarchive 2>&1 | tee "$ARCHIVE_LOG_FILE"
 
    fi
 
@@ -77,7 +77,7 @@ archive()
 
    EXPORT_LOG_FILE="$HOME/build/$BUILD_DATETIME/$APP_DIR/export.txt"
 
-   xcodebuild -exportArchive -archivePath /Users/camilo/archive/$ROOT/$APP.xcarchive -exportPath /Users/camilo/output/$ROOT/ -exportOptionsPlist /Users/camilo/solution/basis/archive/platform-macos/exportOptions.plist 2>&1 | tee "$EXPORT_LOG_FILE"
+   xcodebuild -exportArchive -archivePath /Users/camilo/archive/$ROOT/$APP.xcarchive -exportPath /Users/camilo/output/$ROOT/ -exportOptionsPlist /Users/camilo/solution/basis/operating-system/operating-system-macos/exportOptions.plist 2>&1 | tee "$EXPORT_LOG_FILE"
 
    if [ ! -d $HOME/store/macos/$ROOT ]; then
 

@@ -2,7 +2,7 @@
 
 
 svn checkout https://repos.ca2.software/platform-macos/basis /archive/nodeapp-macos
-svn checkout https://repos.ca2.software/shared/platform /archive/platform_root
-svn checkout https://repos.ca2.software/shared/platform-macos/basis /archive/platform-macos
+svn checkout https://repos.ca2.software/shared/platform /operating-system/operating-system_root
+svn checkout https://repos.ca2.software/shared/platform-macos/basis /operating-system/operating-system-macos
 svn checkout https://repos.ca2.software/shared/storage-macos /archive/storage
 svn checkout https://repos.ca2.software/internal/tool-macos /archive/tool
