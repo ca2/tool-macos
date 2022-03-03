@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+
+cp -Rf $HOME/build_shared/shared/lib/ $HOME/solution/basis/operating-system/storage-macos/library/
+

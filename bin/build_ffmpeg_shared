@@ -22,6 +22,27 @@ function build_shared()
    make -j 8
    make install
 
+   unlink $PREFIX/lib/libavcodec.dylib
+   mv $PREFIX/lib/libavcodec.57.dylib $PREFIX/lib/libavcodec.dylib
+   install_name_tool -id @executable_path/libavcodec.dylib $PREFIX/lib/libavcodec.dylib
+
+   unlink $PREFIX/lib/libavformat.dylib
+   mv $PREFIX/lib/libavformat.57.dylib $PREFIX/lib/libavformat.dylib
+   install_name_tool -id @executable_path/libavformat.dylib $PREFIX/lib/libavformat.dylib
+
+   unlink $PREFIX/lib/libavutil.dylib
+   mv $PREFIX/lib/libavutil.57.dylib $PREFIX/lib/libavutil.dylib
+   install_name_tool -id @executable_path/libavutil.dylib $PREFIX/lib/libavutil.dylib
+
+   unlink $PREFIX/lib/libavutil.dylib
+   mv $PREFIX/lib/libavutil.57.dylib $PREFIX/lib/libavutil.dylib
+   install_name_tool -id @executable_path/libavutil.dylib $PREFIX/lib/libavutil.dylib
+
+   unlink $PREFIX/lib/libswresample.dylib
+   mv $PREFIX/lib/libswresample.7.dylib $PREFIX/lib/libswresample.dylib
+   install_name_tool -id @executable_path/libswresample.dylib $PREFIX/lib/libswresample.dylib
+
+
 
 }
 

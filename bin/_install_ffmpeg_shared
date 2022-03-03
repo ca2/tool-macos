@@ -1,0 +1,97 @@
+#!/bin/bash
+
+
+
+function dolib()
+{
+
+   cd $FFMPEG_BASEDIR
+
+   pushd lib$1
+
+   name="libname_$1"
+   export "${name}"=`ls lib$1.*.dylib`
+   export "${name}"=$(echo "${!name}")
+
+   echo "${name}=${!name}"
+
+   cp lib$1.*.dylib $PREFIX/lib/lib$1.dylib
+
+   pushd $PREFIX/lib
+
+   install_name_tool -id "@executable_path/lib$1.dylib" "lib$1.dylib"
+
+   popd
+
+   popd
+
+}
+
+function dolib4()
+{
+
+   cd $PREFIX/lib
+
+   name="libname_$2"
+
+   echo "install_name_tool -change @executable_path/${!name} @executable_path/lib$2.dylib lib$1.dylib"
+   install_name_tool -change "@executable_path/${!name}" "@executable_path/lib$2.dylib" "lib$1.dylib"
+
+}
+
+
+function dolib2()
+{
+
+   cd $PREFIX/lib
+
+   dolib4 "$1" "avcodec"
+   dolib4 "$1" "avdevice"
+   dolib4 "$1" "avfilter"
+   dolib4 "$1" "avformat"
+   dolib4 "$1" "avutil"
+   dolib4 "$1" "postproc"
+   dolib4 "$1" "swresample"
+   dolib4 "$1" "swscale"
+
+}
+
+
+function install_shared()
+{
+
+
+   BASEDIR=$HOME/build_shared
+   PREFIX=$BASEDIR/shared
+
+   cd $BASEDIR
+
+   cd ffmpeg
+
+   FFMPEG_BASEDIR=`pwd`
+
+   dolib "avcodec"
+   dolib "avdevice"
+   dolib "avfilter"
+   dolib "avformat"
+   dolib "avutil"
+   dolib "postproc"
+   dolib "swresample"
+   dolib "swscale"
+
+   dolib2 "avcodec"
+   dolib2 "avdevice"
+   dolib2 "avfilter"
+   dolib2 "avformat"
+   dolib2 "avutil"
+   dolib2 "postproc"
+   dolib2 "swresample"
+   dolib2 "swscale"
+
+}
+
+
+install_shared
+
+
+
