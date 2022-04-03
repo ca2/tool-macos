@@ -54,7 +54,7 @@ ROOT=$1
  
  
 
-APP_ID="$ROOT/$APP_NAME" 
+APP_DIR="source/$ROOT/$APP_NAME" 
 
  
 

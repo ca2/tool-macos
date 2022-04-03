@@ -5,28 +5,28 @@ __SYSTEM_SLASHED_PLATFORM="macos"
 __SYSTEM_UNDERSCORE_PLATFORM="macos"
 
 
-BASE_DIR=$1 
+BASE_DIR=`pwd`
 
  
  
 
-if [ -z "$BASE_DIR" ]; then 
+# if [ -z "$BASE_DIR" ]; then 
 
  
  
 
-BASE_DIR=$HOME/solution/basis 
+# BASE_DIR=$HOME/solution/basis 
 
  
  
 
-fi 
+# fi 
 
  
  
  
 
-cd $BASE_DIR 
+# cd $BASE_DIR 
 
  
  
@@ -37,7 +37,7 @@ APPLICATION_MATTER_LIST_FILE_PATH="$BASE_DIR/application_matter_list.txt"
  
  
 
-find $BASE_DIR -name application_matter.txt -print > $APPLICATION_MATTER_LIST_FILE_PATH 
+# find $BASE_DIR -name application_matter.txt -print > $APPLICATION_MATTER_LIST_FILE_PATH 
 
  
  
