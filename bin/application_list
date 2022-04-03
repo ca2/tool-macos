@@ -1,0 +1,143 @@
+#!/bin/bash 
+
+ 
+__SYSTEM_SLASHED_PLATFORM="macos"
+__SYSTEM_UNDERSCORE_PLATFORM="macos"
+
+
+BASE_DIR=`pwd`
+
+ 
+ 
+
+# if [ -z "$BASE_DIR" ]; then 
+
+ 
+ 
+
+# BASE_DIR=$HOME/solution/basis 
+
+ 
+ 
+
+# fi 
+
+ 
+ 
+ 
+
+# cd $BASE_DIR 
+
+ 
+ 
+ 
+
+APPLICATION_MATTER_LIST_FILE_PATH="$BASE_DIR/application_matter_list.txt" 
+
+ 
+ 
+
+find . -name application_matter.txt -print > $APPLICATION_MATTER_LIST_FILE_PATH 
+
+ 
+ 
+
+# while read line; do 
+
+ 
+ 
+
+#    APP_DIR=$(dirname $line) 
+
+ 
+ 
+
+#    APP_NAME=$(basename $APP_DIR) 
+
+ 
+ 
+
+#    ROOT_DIR=$(dirname $APP_DIR) 
+
+ 
+ 
+
+#    ROOT=$(basename $ROOT_DIR) 
+
+ 
+ 
+
+#    APP_ID="$ROOT/$APP_NAME" 
+
+ 
+ 
+
+#    APP_REL=${APP_ID//[\/-]/_} 
+
+ 
+ 
+
+#    echo "------------------------------------------------------" 
+
+#    echo "${__SYSTEM_UNDERSCORE_PLATFORM}/_${APP_REL}.cpp" 
+
+#    echo "" 
+
+ 
+ 
+
+#    if [ ! -d "$APP_DIR/platform/${__SYSTEM_SLASHED_PLATFORM}" ]; then 
+
+ 
+ 
+
+#       mkdir -p "$APP_DIR/platform/${__SYSTEM_SLASHED_PLATFORM}" 
+
+ 
+ 
+
+#    fi 
+
+ 
+ 
+
+#    TARGET_APP_REL_CPP="$APP_DIR/platform/${__SYSTEM_SLASHED_PLATFORM}/_${APP_REL}.cpp" 
+
+ 
+ 
+
+#    if [ ! -s $TARGET_APP_REL_CPP ]; then 
+
+ 
+ 
+
+#       SOURCE_APP_REL_CPP="$APP_DIR/_${APP_REL}.cpp" 
+
+ 
+ 
+
+#       cp "$SOURCE_APP_REL_CPP" "$TARGET_APP_REL_CPP" 
+
+ 
+ 
+
+#    fi 
+
+ 
+ 
+
+#    touch "$APP_DIR/application_matter.txt" 
+
+#    $HOME/bin/application_build_helper "$APP_DIR" 
+
+ 
+ 
+
+# done <$APPLICATION_MATTER_LIST_FILE_PATH 
+
+ 
+ 
+ 
+ 
+ 
+ 
