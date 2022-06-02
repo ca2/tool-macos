@@ -1,69 +1,110 @@
 #!/bin/bash
 
-
 if [ -z "$1" ]; then
 
-BASEDIR=$HOME/solution/basis
+        if [ -d .git ]; then
+
+		BASEDIR=$(pwd)
+
+		DIR=$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]\\/]*$//'<<<"${DIR}")
+		
+        else
+
+                if [ -f $HOME/current_working_directory.txt ]; then
+
+		        BASEDIR=`cat $HOME/current_working_directory.txt`
+
+		        BASEDIR=$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]\\/]*$//'<<<"${BASEDIR}")
+
+		        BASEDIR=$(sed -e 's/^\([A-Z]\)[:]/\/\1/'<<<"${BASEDIR}")
+
+		        BASEDIR=$(sed -e 's/\\/\//'<<<"${BASEDIR}")
+
+                fi
+
+		if [ -z "$BASEDIR" ]; then
+
+		        echo "Please run command:"
+                        echo ""
+		        echo "   set_working_directory <WORKING_DIRECTORY_PATH>"
+                        echo ""
+		        echo "to set the base folder path."
+		        echo ""
+		        echo "You can also run this command from a git repository folder."
+
+                        exit 0
+
+                fi
+
+	fi
 
 else
 
-BASEDIR=$1
+	BASEDIR=$1
 
 fi
 
+path_pattern="path = *"
 
-commit()
+pushd () {
+    command pushd "$@" > /dev/null
+}
+
+popd () {
+    command popd "$@" > /dev/null
+}
+
+
+submodule()
 {
 
-        echo "Processing source/$1..."
+        if [ -d "$1" ]; then
 
-        cd $BASEDIR/$1
+                pushd $1
 
+                DIR=$(pwd)
 
-	git add .
-        git commit -F$HOME/Desktop/dedicatory.txt
-        git push
+                DIR=$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]\\/]*$//'<<<"${DIR}")
+
+                echo "Processing $DIR..."
+
+                if [ -f .gitmodules ]; then
+
+                        while read line; do
+
+                                trimmed_line=$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]\\/]*$//'<<<"${line}")
+
+                                if [[ $trimmed_line == $path_pattern ]]; then
+
+                                        submodule_name=$(sed -e 's/^path = //'<<<"${trimmed_line}")
+
+                                        submodule ./$submodule_name
+
+                                fi
+
+                        done < .gitmodules
+
+                fi
+
+                popd
+				
+				git add .
+				git commit -F$HOME/Desktop/dedicatory.txt
+				git push
+				
+
+        fi
 
 }
 
 
-commit operating-system/operating-system-apple
-commit operating-system/operating-system-ios
-commit operating-system/operating-system-macos
-commit operating-system/operating-system-posix
-commit operating-system/storage-macos
-commit operating-system/third-macos
-commit operating-system/tool-macos
+submodule $BASEDIR
 
 
-commit operating-system
 
 
-commit source/app
-commit source/app-cidadedecuritiba
-commit source/app-complex
-commit source/app-core
-commit source/app-simple
-commit source/app-veriwell
-commit source/ca2
-commit source/console
-commit source/console-core
-commit source/design
-commit source/game
-commit source/include
-commit source/third
-
-if [ -d "$BASEDIR/source/tranquillum" ]; then
-
-   commit source/tranquillum
-
-fi
 
 
-commit source
-
-
-commit .
 
 
 
