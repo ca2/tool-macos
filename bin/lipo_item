@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+lipo -create arm64/$1.a x86_64/$1.a -output $1.a
+
+
+
