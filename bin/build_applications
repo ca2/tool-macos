@@ -127,11 +127,11 @@ while read line; do
  
  
 
-   touch "$APP_DIR/application_matter.txt" 
+#   touch "$APP_DIR/application_matter.txt" 
 
-   $HOME/bin/application_build_helper "$APP_DIR" 
+#   $HOME/bin/application_build_helper "$APP_DIR" 
 
- 
+    build_project _$APP_REL
  
 
 done <$APPLICATION_LIST_FILE_PATH 

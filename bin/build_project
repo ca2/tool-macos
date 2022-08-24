@@ -1,0 +1,25 @@
+#!/bin/bash
+#https://gist.github.com/bradjasper
+
+
+SCHEME=$1
+WORKSPACE_DIR=$HOME/solution/stage/operating-system/operating-system-macos/_seed
+BUILD_DIR=$HOME/solution/stage/xcode-build-stage/$SCHEME
+FOCUS_ARCHIVE=$HOME/solution/archive/$SCHEME.xcarchive
+FOCUS_APP=$HOME/store/macos/$SCHEME.app
+
+echo "Building $SCHEME..."
+
+echo "Cleaning up old archive & app..."
+rm -rf $FOCUS_ARCHIVE $FOCUS_APP
+
+echo "Building archive..."
+xcodebuild -workspace $WORKSPACE_DIR/mac-all.xcworkspace -config Release -scheme $SCHEME -archivePath $FOCUS_ARCHIVE -parallelizeTargets -jobs 8 archive
+
+echo "Exporting archive..."
+xcodebuild -archivePath $FOCUS_ARCHIVE -exportArchive -exportPath $FOCUS_APP -exportFormat app
+
+echo "Cleaning up archive..."
+rm -rf $FOCUS_ARCHIVE
+
+echo "Done"

@@ -1,24 +1,37 @@
 #!/bin/bash
 
 
+LIBNAME="freetype"
+
+
+
+PROJECT_DIR=$HOME/build_shared/$LIBNAME
+BASE_PREFIX=$HOME/build_shared/shared
+
+
 function build_shared()
 {
 
-   BASEDIR=$HOME/build_shared
-   PREFIX=$BASEDIR/shared
 
-   export MACOSX_DEPLOYMENT_TARGET=10.9
+   ARCH=$1
+   TARGETTING=$2
+   TARGET=$3
+   HOST=$4
+   BASEDIR=$PROJECT_DIR/$ARCH
+   PREFIX=$BASE_PREFIX/$ARCH
 
+   export MACOSX_DEPLOYMENT_TARGET=$TARGET
+   
+   mkdir -p $BASEDIR
    mkdir -p $PREFIX
 
    cd $BASEDIR
 
    echo "Fetching Poor-Baby-Linux freetype..."
-   git clone https://github.com/freetype/freetype.git freetype
-   cd freetype
+   git clone https://github.com/freetype/freetype.git .
    echo "Building Poor-Baby-Linux freetype..."
    ./autogen.sh
-   ./configure --prefix=$PREFIX --enable-pic --enable-shared 
+   ./configure --prefix=$PREFIX --enable-pic --enable-shared  --host=$HOST CC="cc -target $TARGETTING" CXX="c++ -target $TARGETTING"
    make -j 8
    make install
    unlink $PREFIX/lib/libfreetype.dylib
@@ -28,8 +41,18 @@ function build_shared()
 
 }
 
+rm -Rf $PROJECT_DIR
 
-build_shared
+
+build_shared arm64 arm64-apple-macos10.12 10.12 aarch64-apple-darwin
+build_shared x86_64 x86_64-apple-macos10.9 10.9 x86_64-apple-darwin
+
+ARM_PATH=$BASE_PREFIX/arm64/lib/lib$LIBNAME.dylib
+X86_PATH=$BASE_PREFIX/x86_64/lib/lib$LIBNAME.dylib
+
+lipo -create -arch arm64 $ARM_PATH -arch x86_64 $X86_PATH -output $HOME/solution/stage/operating-system/storage-macos/library/lib$LIBNAME.dylib
+
+
 
 
 

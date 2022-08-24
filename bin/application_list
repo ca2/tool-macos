@@ -32,12 +32,12 @@ BASE_DIR=`pwd`
  
  
 
-APPLICATION_MATTER_LIST_FILE_PATH="$BASE_DIR/application_matter_list.txt" 
+APPLICATION_LIST_FILE_PATH="$BASE_DIR/application_list.txt" 
 
  
  
 
-find . -name application_matter.txt -print > $APPLICATION_MATTER_LIST_FILE_PATH 
+find . -name application.txt -print > $APPLICATION_LIST_FILE_PATH 
 
  
  
@@ -133,7 +133,7 @@ find . -name application_matter.txt -print > $APPLICATION_MATTER_LIST_FILE_PATH
  
  
 
-# done <$APPLICATION_MATTER_LIST_FILE_PATH 
+# done <$APPLICATION_LIST_FILE_PATH 
 
  
  
