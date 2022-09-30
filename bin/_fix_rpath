@@ -6,6 +6,7 @@ function fix_rpath()
 
 FFMPEG_PREFIX="/Users/camilo/build_shared/shared/x86_64/lib"
 
+
 install_name_tool -change /usr/local/opt/openssl@1.1/lib/libcrypto.1.1.dylib @executable_path/libcrypto.3.dylib "$1"
 install_name_tool -change /usr/local/opt/openssl@1.1/lib/libssl.1.1.dylib @executable_path/libssl.3.dylib "$1"
 install_name_tool -change /usr/local/Cellar/openssl@1.1/1.1.1d/lib/libcrypto.1.1.dylib @executable_path/libcrypto.3.dylib "$1"
@@ -29,6 +30,8 @@ install_name_tool -change $FFMPEG_PREFIX/libpostproc.55.dylib @executable_path/l
 install_name_tool -change $FFMPEG_PREFIX/libswresample.4.dylib @executable_path/libswresample.dylib "$1"
 install_name_tool -change $FFMPEG_PREFIX/libswresample.3.dylib @executable_path/libswresample.dylib "$1"
 install_name_tool -change $FFMPEG_PREFIX/libswscale.5.dylib @executable_path/libswscale.dylib "$1"
+install_name_tool -change @executable_path/libswresample.3.dylib @executable_path/libswresample.dylib "$1"
+install_name_tool -change @executable_path/libavcodec.3.dylib @executable_path/libavcodec.dylib "$1"
 install_name_tool -change /usr/local/opt/lame/lib/libmp3lame.0.dylib @executable_path/libmp3lame.dylib "$1"
 install_name_tool -change /usr/local/opt/x264/lib/libx264.152.dylib @executable_path/libx264.dylib "$1"
 install_name_tool -change /usr/local/opt/libusb/lib/libusb-1.0.0.dylib @executable_path/libusb-1.0.0.dylib "$1"
