@@ -28,7 +28,9 @@ else
    echo "# ca2 patch_shell" >> $RC_FILE
    echo "" >> $RC_FILE
    echo "" >> $RC_FILE
-   echo "PATH=\$HOME/solution/basis/operating-system/tool-macos/bin:\$PATH" >> $RC_FILE
+   echo 
+"PATH=\$HOME/solution/debug/operating-system/tool-macos/bin:\$PATH" 
+>> $RC_FILE
    echo "" >> $RC_FILE
    echo "" >> $RC_FILE
    echo "export PATH" >> $RC_FILE
