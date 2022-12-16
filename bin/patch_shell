@@ -1,51 +1,57 @@
 #!/bin/zsh
 
 
-RC_FILE="$HOME/.zsh_profile"
+function defer_patch()
+{
 
-if [ ! -f "$RC_FILE" ]; then
+   RC_FILE=$1
 
-
-   echo "#!/bin/zsh" >> $RC_FILE 
-
-
-fi
+   if [ ! -f "$RC_FILE" ]; then
 
 
-if grep -q "# ca2 patch_shell" "$RC_FILE"; then
+      echo "#!/bin/zsh" >> $RC_FILE 
 
 
-   echo "\"$RC_FILE\" is already patched."
+   fi
 
 
-else
+   if grep -q "# ca2 patch_shell" "$RC_FILE"; then
 
 
-   echo "" >> $RC_FILE
-   echo "" >> $RC_FILE
-   echo "" >> $RC_FILE
-   echo "" >> $RC_FILE
-   echo "# ca2 patch_shell" >> $RC_FILE
-   echo "" >> $RC_FILE
-   echo "" >> $RC_FILE
-   echo 
-"PATH=\$HOME/solution/debug/operating-system/tool-macos/bin:\$PATH" 
->> $RC_FILE
-   echo "" >> $RC_FILE
-   echo "" >> $RC_FILE
-   echo "export PATH" >> $RC_FILE
-   echo "" >> $RC_FILE
-   echo "" >> $RC_FILE
-   echo "# end ca2 patch_shell + 4 new lines" >> $RC_FILE
-   echo "" >> $RC_FILE
-   echo "" >> $RC_FILE
-   echo "" >> $RC_FILE
-   echo "" >> $RC_FILE
-
-   echo "Successfully patched \"$RC_FILE\""
+      echo "\"$RC_FILE\" is already patched."
 
 
-fi
+   else
 
 
+      echo "" >> $RC_FILE
+      echo "" >> $RC_FILE
+      echo "" >> $RC_FILE
+      echo "" >> $RC_FILE
+      echo "# ca2 patch_shell" >> $RC_FILE
+      echo "" >> $RC_FILE
+      echo "" >> $RC_FILE
+      echo "PATH=\$HOME/solution/main/operating-system/tool-macos/bin:\$PATH" >> $RC_FILE echo "" >> $RC_FILE
+      echo "" >> $RC_FILE
+      echo "export PATH" >> $RC_FILE
+      echo "" >> $RC_FILE
+      echo "" >> $RC_FILE
+      echo "# end ca2 patch_shell + 4 new lines" >> $RC_FILE
+      echo "" >> $RC_FILE
+      echo "" >> $RC_FILE
+      echo "" >> $RC_FILE
+      echo "" >> $RC_FILE
+
+      echo "Successfully patched \"$RC_FILE\""
+
+
+   fi
+
+
+
+}
+
+
+defer_patch "$HOME/.zsh_profile"
+defer_patch "$HOME/.zshrc"
 
