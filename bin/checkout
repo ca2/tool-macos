@@ -67,9 +67,21 @@ submodule()
                 DIR=$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]\\/]*$//'<<<"${DIR}")
 
                 echo "Processing $DIR..."
+		
+		git fetch
+		
+		LIST_MAIN_BRANCH=$(git branch --list main)
 
-                git fetch
-                git checkout basis
+                if [ -n "$LIST_MAIN_BRANCH" ]; then
+
+                    git checkout main
+
+                else
+
+                    git checkout master
+
+                fi
+
                 git pull
 
                 if [ -f .gitmodules ]; then
