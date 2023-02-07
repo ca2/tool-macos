@@ -1,68 +1,11 @@
 #!/bin/bash 
 
  
-__SYSTEM_SLASHED_PLATFORM="macos"
-__SYSTEM_UNDERSCORE_PLATFORM="macos"
 
-
-BASE_DIR=`pwd`
+APP_DIR="source/$1" 
 
  
- 
-
-# if [ -z "$BASE_DIR" ]; then 
-
- 
- 
-
-# BASE_DIR=$HOME/solution/basis 
-
- 
- 
-
-# fi 
-
- 
- 
- 
-
-# cd $BASE_DIR 
-
- 
- 
- 
-
-APPLICATION_MATTER_LIST_FILE_PATH="$BASE_DIR/application_matter_list.txt" 
-
- 
- 
-
-# find $BASE_DIR -name application_matter.txt -print > $APPLICATION_MATTER_LIST_FILE_PATH 
-
- 
- 
- 
- 
-
-APP_NAME=$2 
-
- 
- 
-
-ROOT=$1 
-
- 
- 
-
-APP_DIR="source/$ROOT/$APP_NAME" 
-
- 
-
- 
-
-touch "$APP_DIR/application_matter.txt" 
-
-$HOME/bin/application_build_helper "$APP_DIR" 
+application_build_helper -prepare_application "$APP_DIR" 
 
  
  
