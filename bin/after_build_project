@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+
+if [ ! -d "$WorkspaceDir/time-macos/aggregate" ]; then
+
+	mkdir -p "$WorkspaceDir/time-macos/aggregate"
+
+fi
+
+cp "$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME" "$WorkspaceDir/time-macos/aggregate/$FULL_PRODUCT_NAME"
+cp -Rf "$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME.dSYM" "$WorkspaceDir/time-macos/aggregate/$FULL_PRODUCT_NAME.dSYM"

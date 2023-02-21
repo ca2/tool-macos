@@ -1,0 +1,117 @@
+#!/bin/zsh
+
+
+archive()
+{
+
+	SCHEME=$1
+
+   XCARCHIVE=time-macos/archive/$SCHEME.xcarchive
+
+   ZIP=time-macos/store/$SCHEME.zip
+
+   RELEASEFOLDER=time-macos/release
+
+   RELEASEAPP=$RELEASEFOLDER/$SCHEME.app
+
+   EXPORTOPTIONSPLIST=operating-system/operating-system-macos/exportOptions.plist
+
+   if [ ! -f "$ZIP" ]; then
+
+
+      if [ ! -d "$RELEASEAPP" ]; then
+
+
+         if [ ! -d "$XCARCHIVE" ]; then
+
+            echo "xcarchive folder \"$XCARCHIVE\" doesn't exist..."
+
+            echo "Creating xcarchive folder \"$XCARCHIVE\"..."
+
+            xcodebuild -workspace operating-system/operating-system-macos/_workspace/mac-all.xcworkspace -scheme $SCHEME archive -archivePath "$XCARCHIVE"
+
+         fi
+
+         echo "application folder \"$RELEASEAPP\" doesn't exist..."
+
+         echo "Creating application folder \"$RELEASEAPP\"..."
+
+	      xcodebuild -exportArchive -archivePath "$XCARCHIVE" -exportPath "$RELEASEFOLDER" -exportOptionsPlist "$EXPORTOPTIONSPLIST"
+
+      fi
+
+      echo "\"$ZIP\" doesn't exist..."
+
+      echo "Creating \"$ZIP\"..."
+
+	   zip -r "$ZIP" "$RELEASEAPP"
+
+   fi
+
+   echo "$SCHEME"
+
+}
+
+if [ ! -d time-macos/archive ]; then
+
+   mkdir -p time-macos/archive
+
+fi
+
+if [ ! -d time-macos/release ]; then
+
+   mkdir -p time-macos/release
+
+fi
+
+if [ ! -d time-macos/store ]; then
+
+   mkdir -p time-macos/store
+
+fi
+
+
+APPLICATION_LIST_FILE_PATH="application_list.txt"
+ 
+
+while read line; do 
+
+ 
+ 
+
+   APP_DIR=$(dirname $line) 
+
+ 
+ 
+
+   APP_NAME=$(basename $APP_DIR) 
+
+ 
+ 
+
+   ROOT_DIR=$(dirname $APP_DIR) 
+
+ 
+ 
+
+   ROOT=$(basename $ROOT_DIR) 
+
+ 
+
+   archive "_${ROOT}_${APP_NAME}" 
+
+ 
+ 
+
+done <$APPLICATION_LIST_FILE_PATH 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+

@@ -1,0 +1,41 @@
+#!/bin/zsh
+
+
+archive()
+{
+
+	SCHEME=$1
+
+	xcodebuild -workspace operating-system/operating-system-macos/_workspace/mac-all.xcworkspace -scheme $SCHEME archive -configuration Release -sdk macos -archivePath time-macos/archive/$SCHEME.xcarchive
+
+	xcodebuild -exportArchive -exportFormat app -archivePath time-macos/$SCHEME.xcarchive -exportPath time-macos/release/$SCHEME.app -exportSigningIdentity "Developer ID Application: Camilo Tsumanuma"
+
+	zip -r time-macos/store/$SCHEME.zip time-macos/release/$SCHEME.app
+
+}
+
+
+if [ ! -d time-macos/archive ]; then
+
+   mkdir -p time-macos/archive
+
+fi
+
+if [ ! -d time-macos/release ]; then
+
+   mkdir -p time-macos/release
+
+fi
+
+
+if [ ! -d time-macos/store ]; then
+
+   mkdir -p time-macos/store
+
+fi
+
+xcode-select -switch /Applications/Xcode.app
+
+archive _app_app
+
+
