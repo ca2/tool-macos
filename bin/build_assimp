@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# assumptions
+# brew install cmake
+# brew install assimp
+# brew install git git-lfs
+# $HOME/solution/operating_system/storage-macos <== https://macos.ca2.software/storage-macos.zip
+
+
+_build_assimp()
+{
+
+   mkdir $HOME/port
+   cd $HOME/port
+   rm -Rf assimp
+   git clone https://github.com/cpp-port/assimp
+   cd assimp
+   cmake CMakeLists.txt -GNinja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+   ninja
+   cp bin/libassimp.dylib $HOME/solution/operating_system/storage-macos/third/library/
+
+}
+
+
+
+
+_build_assimp
