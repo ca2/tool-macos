@@ -1,7 +1,4 @@
 #!/bin/bash
 
 
-application_build_helper -prepare_applications application_list.txt
-
-
-
+application_build_helper --prepare-applications

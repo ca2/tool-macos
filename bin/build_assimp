@@ -15,7 +15,7 @@ _build_assimp()
    rm -Rf assimp
    git clone https://github.com/cpp-port/assimp
    cd assimp
-   cmake CMakeLists.txt -GNinja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+   cmake CMakeLists.txt -GNinja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.13"
    ninja
    cp bin/libassimp.dylib $HOME/solution/operating_system/storage-macos/third/library/
 
