@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 
@@ -49,23 +50,39 @@ function build_shared()
    make -j 8
    make install
 
+   EXTGLOBWASSET=0
+
+   if [[ -o extended_glob ]]; then
+      EXTGLOBWASSET=1
+   fi
+
+   if [ ! $EXTGLOBWASSET ]; then
+      setopt extendedglob 
+   fi
+
    unlink $PREFIX/lib/libavcodec.dylib
-   mv $PREFIX/lib/libavcodec.59.dylib $PREFIX/lib/libavcodec.dylib
+   mv $PREFIX/lib/libavcodec.[0-9]##.dylib $PREFIX/lib/libavcodec.dylib
    install_name_tool -id @executable_path/libavcodec.dylib $PREFIX/lib/libavcodec.dylib
 
    unlink $PREFIX/lib/libavformat.dylib
-   mv $PREFIX/lib/libavformat.59.dylib $PREFIX/lib/libavformat.dylib
+   mv $PREFIX/lib/libavformat.[0-9]##.dylib $PREFIX/lib/libavformat.dylib
    install_name_tool -id @executable_path/libavformat.dylib $PREFIX/lib/libavformat.dylib
 
    unlink $PREFIX/lib/libavutil.dylib
-   mv $PREFIX/lib/libavutil.57.dylib $PREFIX/lib/libavutil.dylib
+   mv $PREFIX/lib/libavutil.[0-9]##.dylib $PREFIX/lib/libavutil.dylib
    install_name_tool -id @executable_path/libavutil.dylib $PREFIX/lib/libavutil.dylib
 
    unlink $PREFIX/lib/libswresample.dylib
-   mv $PREFIX/lib/libswresample.4.dylib $PREFIX/lib/libswresample.dylib
+   mv $PREFIX/lib/libswresample.[0-9]##.dylib $PREFIX/lib/libswresample.dylib
    install_name_tool -id @executable_path/libswresample.dylib $PREFIX/lib/libswresample.dylib
 
+   unlink $PREFIX/lib/libswscale.dylib
+   mv $PREFIX/lib/libswscale.[0-9]##.dylib $PREFIX/lib/libswscale.dylib
+   install_name_tool -id @executable_path/libswscale.dylib $PREFIX/lib/libswscale.dylib
 
+   if [ ! $EXTGLOBWASSET ]; then
+      unsetopt extendedglob
+   fi
 
 }
 
@@ -82,23 +99,28 @@ function library_lipo()
 
    lipo -create -arch arm64 $ARM_PATH -arch x86_64 $X86_PATH -output $HOME/solution/stage/operating-system/storage-macos/library/lib$LIBNAME.dylib
 
-
-
 }
-
 
 
 # rm -Rf $PROJECT_DIR
 
 
-# build_shared arm64 arm64-apple-macos10.12 10.12 aarch64-apple-darwin aarch64
-# build_shared x86_64 x86_64-apple-macos10.9 10.9 x86_64-apple-darwin
+build_shared arm64 arm64-apple-macos10.12 10.12 aarch64-apple-darwin 
+aarch64
+build_shared x86_64 x86_64-apple-macos10.9 10.9 x86_64-apple-darwin
 
 
 library_lipo avcodec
 library_lipo avformat
 library_lipo avutil
 library_lipo swresample
+library_lipo swscale
 
-cp -Rf $BASE_PREFIX/arm64/include/ $HOME/solution/stage/operating-system/storage-macos/include/
+if [ ! -d $HOME/workspace/operating_system/storage-macos/library ]; then
+
+   mkdir $HOME/workspace/operating_system/storage-macos/library
+
+fi
+
+cp -Rf $BASE_PREFIX/arm64/include/ $HOME/workspace/operating_system/storage-macos/include/
 

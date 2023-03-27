@@ -43,13 +43,7 @@ function patch_rc_file()
       echo "HOME_BIN_DIR=\"$HOME/bin\"" >> $RC_FILE
       echo "" >> $RC_FILE
       echo "" >> $RC_FILE
-      echo "if [[ \"\$PATH\" != *\"\$HOME_BIN_DIR\"* ]]; then" >> $RC_FILE
-      echo "" >> $RC_FILE
-      echo "" >> $RC_FILE
-      echo "   PATH=\$HOME_BIN_DIR:\$PATH" >> $RC_FILE
-      echo "" >> $RC_FILE
-      echo "" >> $RC_FILE
-      echo "fi" >> $RC_FILE
+      echo "PATH=\$HOME_BIN_DIR:\$PATH" >> $RC_FILE
       echo "" >> $RC_FILE
       echo "" >> $RC_FILE
       echo "export PATH" >> $RC_FILE

@@ -50,7 +50,13 @@ build_shared x86_64 x86_64-apple-macos10.9 10.9 x86_64-apple-darwin
 ARM_PATH=$BASE_PREFIX/arm64/lib/lib$LIBNAME.dylib
 X86_PATH=$BASE_PREFIX/x86_64/lib/lib$LIBNAME.dylib
 
-lipo -create -arch arm64 $ARM_PATH -arch x86_64 $X86_PATH -output $HOME/solution/stage/operating-system/storage-macos/library/lib$LIBNAME.dylib
+if [ ! -d $HOME/workspace/operating_system/storage-macos/library ]; then
+
+   mkdir $HOME/workspace/operating_system/storage-macos/library
+
+fi
+
+lipo -create -arch arm64 $ARM_PATH -arch x86_64 $X86_PATH -output $HOME/workspace/operating_system/storage-macos/library/lib$LIBNAME.dylib
 
 
 
