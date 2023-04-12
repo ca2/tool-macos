@@ -84,32 +84,36 @@ submodule()
 
                 git pull
 
-                if [ -f .gitmodules ]; then
+                if [ -n "$LIST_MAIN_BRANCH" ]; then
+
+                        if [ -f .gitmodules ]; then
 
 
-                        #echo ".gitmodules is a file here"
+                                #echo ".gitmodules is a file here"
 
-                        while read line; do
+                                while read line; do
 
-                                trimmed_line=$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]\\/]*$//'<<<"${line}")
+                                        trimmed_line=$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]\\/]*$//'<<<"${line}")
 
-                                #echo "this is a line read \"$trimmed_line\""
+                                        #echo "this is a line read \"$trimmed_line\""
 
-                                if [[ $trimmed_line == $path_pattern ]]; then
+                                        if [[ $trimmed_line == $path_pattern ]]; then
 
 
-                                        submodule_name=$(sed -e 's/^path = //'<<<"${trimmed_line}")
-                                #echo "found path pattern here \"$submodule_name\""
+                                                submodule_name=$(sed -e 's/^path = //'<<<"${trimmed_line}")
+                                        #echo "found path pattern here \"$submodule_name\""
 
-                                        submodule ./$submodule_name
+                                                submodule ./$submodule_name
 
-                                fi
+                                        fi
 
-                        done < .gitmodules
+                                done < .gitmodules
 
-                #else
+                        #else
 
-                        #echo ".gitmodules is not a file here"
+                                #echo ".gitmodules is not a file here"
+
+                        fi
 
                 fi
 

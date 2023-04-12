@@ -4,7 +4,7 @@
 # brew install cmake
 # brew install assimp
 # brew install git git-lfs
-# $HOME/solution/operating_system/storage-macos <== https://macos.ca2.software/storage-macos.zip
+# $HOME/workspace/operating_system/storage-macos <== https://macos.ca2.software/storage-macos.zip
 
 
 _build_assimp()
@@ -17,7 +17,7 @@ _build_assimp()
    cd assimp
    cmake CMakeLists.txt -GNinja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.13"
    ninja
-   cp bin/libassimp.dylib $HOME/solution/operating_system/storage-macos/third/library/
+   cp bin/libassimp.dylib $HOME/workspace/operating_system/storage-macos/third/library/
 
 }
 
