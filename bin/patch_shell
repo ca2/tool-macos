@@ -28,6 +28,9 @@ function patch_rc_file()
       echo "# ca2 patch_shell" >> $RC_FILE
       echo "" >> $RC_FILE
       echo "" >> $RC_FILE
+      echo "export GPG_TTY=\$(tty)" >> $RC_FILE
+      echo "" >> $RC_FILE
+      echo "" >> $RC_FILE
       echo "CA2_SCRIPT_DIR=\"$SCRIPT_DIR\"" >> $RC_FILE
       echo "" >> $RC_FILE
       echo "" >> $RC_FILE
