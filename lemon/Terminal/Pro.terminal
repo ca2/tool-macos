@@ -65,6 +65,8 @@
 	<true/>
 	<key>name</key>
 	<string>Pro</string>
+	<key>rowCount</key>
+	<integer>16</integer>
 	<key>shellExitAction</key>
 	<integer>1</integer>
 	<key>type</key>
