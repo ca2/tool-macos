@@ -52,6 +52,9 @@ function patch_rc_file()
       echo "export PATH" >> $RC_FILE
       echo "" >> $RC_FILE
       echo "" >> $RC_FILE
+      echo ". defer_ssh_agent" >> $RC_FILE
+      echo "" >> $RC_FILE
+      echo "" >> $RC_FILE
       echo "# end ca2 patch_shell + 4 new lines" >> $RC_FILE
       echo "" >> $RC_FILE
       echo "" >> $RC_FILE
