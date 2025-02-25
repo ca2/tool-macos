@@ -1,0 +1,34 @@
+#!/bin/sh
+
+
+prepare_application()
+{
+
+   cd "${WorkspaceDir}"
+
+   app_folder="$(dirname "${PROJECT_DIR}")"
+
+   #echo "app_folder=${app_folder}"
+
+   app="$(basename "${app_folder}")"
+
+   #echo "app=${app}"
+
+   root_folder="$(dirname "${app_folder}")"
+
+   #echo "root_folder=${root_folder}"
+
+   root="$(basename "${root_folder}")"
+
+   #echo "root=${root}"
+
+   appid="$root/$app"
+
+   ${HOME}/code/operating_system/tool/bin/application_build_helper --prepare-application $appid
+
+}
+
+prepare_application
+
+
+
