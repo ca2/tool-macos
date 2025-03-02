@@ -1,14 +1,44 @@
 #!/bin/sh
 
+package0()
+{
+
+   cd ${WorkspaceDir}
+
+   item_path=$(dirname ${PROJECT_DIR})
+
+   #echo "item_path=${item_path}"
+
+   item=$(basename ${item_path})
+
+   #echo "item=${item}"
+
+   root_path=$(dirname ${item_path})
+
+   #echo "root_path=${root_path}"
+
+   root=$(basename ${root_path})
+
+   #echo "root=${root}"
+
+   ${HOME}/code/operating_system/tool/bin/application_build_helper --package0-application $root/$item
+
+}
+
 INPUT_FOLDER="${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}"
 
 # $(WorkspaceDir)/time-$(PLATFORM_MODIFIER)/$(CONFIGURATION)
-OUTPUT_FOLDER="${WorkspaceDir}/time-${PLATFORM_MODIFIER}/${CONFIGURATION}"
+OUTPUT_FOLDER="${WorkspaceDir}/time-${PLATFORM_MODIFIER}/output"
 
 if [ -d "${OUTPUT_FOLDER}" ]; then
    
-mkdir -p "${OUTPUT_FOLDER}"
+   mkdir -p "${OUTPUT_FOLDER}"
 
 fi
 
 cp "${INPUT_FOLDER}/${EXECUTABLE_NAME}" "${OUTPUT_FOLDER}/${EXECUTABLE_NAME}"
+
+
+package0
+
+

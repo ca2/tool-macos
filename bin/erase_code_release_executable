@@ -1,0 +1,5 @@
+#!/bin/sh
+
+rm /Users/camilo/code/release/time-macos/output/_*
+
+
