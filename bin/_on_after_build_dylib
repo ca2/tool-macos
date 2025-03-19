@@ -5,7 +5,7 @@ INPUT_FOLDER="${BUILT_PRODUCTS_DIR}"
 # $(WorkspaceDir)/time-$(PLATFORM_MODIFIER)/$(CONFIGURATION)
 OUTPUT_FOLDER="${WorkspaceDir}/time-${PLATFORM_MODIFIER}/output"
 
-if [ -d "${OUTPUT_FOLDER}" ]; then
+if [ ! -d "${OUTPUT_FOLDER}" ]; then
    
    mkdir -p "${OUTPUT_FOLDER}"
 
