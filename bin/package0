@@ -1,4 +1,4 @@
 #!/bin/zsh
 
 
-application_build_helper --package0
+application_build_helper --copy-application-output
