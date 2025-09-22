@@ -1,4 +1,7 @@
 #!/bin/zsh
 
 
-application_build_helper --copy-application-output
+application_build_helper --copy-output
+
+
+
