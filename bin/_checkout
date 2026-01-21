@@ -1,0 +1,13 @@
+#!/bin/bash
+/usr/bin/osascript - "$1" 2>/dev/null << EOF
+on run argv
+	set newpath to (do shell script "echo $PATH")
+	if application "Terminal" is not running
+		launch application "Terminal"
+	end if
+	tell application "Terminal"
+		activate
+		do script with command "cd " & quoted form of item 1 of argv & "; export PATH=" & quoted form of newpath & "; checkout; zsh"
+	end tell
+end run
+EOF

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+$HOME/code/operating_system/tool/bin/application_build_helper --git-recurse-submodules "$@"
+
+
