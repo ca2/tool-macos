@@ -28,6 +28,9 @@ prepare_application()
 
 }
 
+echo "Running helper:"
+ls -l ${HOME}/code/operating_system/tool/bin/application_build_helper
+
 prepare_application
 
 

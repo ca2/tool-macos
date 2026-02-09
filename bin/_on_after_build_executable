@@ -1,6 +1,6 @@
 #!/bin/sh
 
-package0()
+copy_application_output()
 {
 
    cd ${WorkspaceDir}
@@ -21,16 +21,19 @@ package0()
 
    #echo "root=${root}"
 
-   ${HOME}/code/operating_system/tool/bin/application_build_helper --package0-application $root/$item
+   ${HOME}/code/operating_system/tool/bin/application_build_helper --copy-application-output $root/$item
 
 }
+
+echo "Running helper:"
+ls -l ${HOME}/code/operating_system/tool/bin/application_build_helper
 
 INPUT_FOLDER="${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}"
 
 # $(WorkspaceDir)/time-$(PLATFORM_MODIFIER)/$(CONFIGURATION)
 OUTPUT_FOLDER="${WorkspaceDir}/time-${PLATFORM_MODIFIER}/output"
 
-if [ -d "${OUTPUT_FOLDER}" ]; then
+if [ ! -d "${OUTPUT_FOLDER}" ]; then
    
    mkdir -p "${OUTPUT_FOLDER}"
 
@@ -38,7 +41,7 @@ fi
 
 cp "${INPUT_FOLDER}/${EXECUTABLE_NAME}" "${OUTPUT_FOLDER}/${EXECUTABLE_NAME}"
 
+copy_application_output
 
-package0
 
 
