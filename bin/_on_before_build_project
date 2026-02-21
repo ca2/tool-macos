@@ -1,0 +1,54 @@
+#!/bin/sh
+
+
+prepare_project()
+{
+
+   echo "WorkspaceDir=${WorkspaceDir}"
+   echo "SRCROOT is ${SRCROOT}"
+   echo "HOME=${HOME}"
+
+   projectfolder=${SRCROOT}
+   echo "projectfolder is ${projectfolder}"
+   projectrepository=$(dirname $projectfolder)
+   echo "projectrepository is ${projectrepository}"
+   parentprojectrepository=$(dirname $projectrepository)
+   echo "parentprojectrepository is ${parentprojectrepository}"
+   mainbase=$(dirname $parentprojectrepository)
+   echo "mainbase is ${mainbase}"
+   cd ${mainbase}
+
+   current_directory=$(pwd)
+
+   echo "current directory is ${current_directory}"
+
+   project_directory=${SRCROOT}
+   
+   echo "project directory is ${project_directory}"
+
+   name=$(basename $project_directory)
+   parentname=$(dirname $project_directory)
+   echo "name is ${name}"
+   echo "parentname is ${parentname}"
+   root=$(basename ${parentname})
+   echo "root is ${root}"
+
+   strAppId="${root}/${name}"
+   echo "strAppId is ${strAppId}"
+   
+   ${HOME}/code/operating_system/tool/bin/application_build_helper --prepare-project ${strAppId}
+
+
+}
+
+echo "WorkspaceDir is ${WorkspaceDir}"
+echo "SRCROOT is ${SRCROOT}"
+
+if [[ ! "${WorkspaceDir}" =~ "code/console_build_tools" ]]; then
+
+prepare_project
+
+fi
+
+
+
