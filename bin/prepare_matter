@@ -1,0 +1,5 @@
+#!/bin/bash
+
+
+application_build_helper --prepare-matter
+
