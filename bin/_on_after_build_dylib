@@ -1,14 +1,21 @@
 #!/bin/sh
 
-INPUT_FOLDER="${BUILT_PRODUCTS_DIR}"
+if [ "$ACTION" != "install" ]; then
+
+   INPUT_FOLDER="${BUILT_PRODUCTS_DIR}"
 
 # $(WorkspaceDir)/time-$(PLATFORM_MODIFIER)/$(CONFIGURATION)
-OUTPUT_FOLDER="${WorkspaceDir}/time-${PLATFORM_MODIFIER}/output"
+   OUTPUT_FOLDER="${WorkspaceDir}/time-${PLATFORM_MODIFIER}/output"
 
-if [ ! -d "${OUTPUT_FOLDER}" ]; then
+   if [ ! -d "${OUTPUT_FOLDER}" ]; then
    
-   mkdir -p "${OUTPUT_FOLDER}"
+      mkdir -p "${OUTPUT_FOLDER}"
+
+   fi
+
+   cp "${INPUT_FOLDER}/${EXECUTABLE_NAME}" "${OUTPUT_FOLDER}/${EXECUTABLE_NAME}"
 
 fi
 
-cp "${INPUT_FOLDER}/${EXECUTABLE_NAME}" "${OUTPUT_FOLDER}/${EXECUTABLE_NAME}"
+
+
