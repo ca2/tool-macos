@@ -26,12 +26,22 @@ prepare_application()
 
    ${HOME}/code/operating_system/tool/bin/application_build_helper --prepare-application $appid
 
+   EXIT_CODE=$?
+
+   return $EXIT_CODE
+
 }
 
 echo "Running helper:"
 ls -l ${HOME}/code/operating_system/tool/bin/application_build_helper
 
 prepare_application
+
+EXIT_CODE=$?
+
+exit $EXIT_CODE
+
+
 
 
 

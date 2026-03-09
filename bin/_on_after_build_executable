@@ -23,6 +23,10 @@ copy_application_output()
 
    ${HOME}/code/operating_system/tool/bin/application_build_helper --copy-application-output $root/$item
 
+   EXIT_CODE=$?
+
+   return $EXIT_CODE
+
 }
 
 echo "Running helper:"
@@ -42,6 +46,10 @@ fi
 cp "${INPUT_FOLDER}/${EXECUTABLE_NAME}" "${OUTPUT_FOLDER}/${EXECUTABLE_NAME}"
 
 copy_application_output
+
+EXIT_CODE=$?
+
+exit $EXIT_CODE
 
 
 
