@@ -1,0 +1,11 @@
+#!/bin/bash
+
+rm -Rf "$HOME/application"
+rm -Rf "$HOME/Library/ca2"
+rm -Rf "$HOME/Library/Application Support/app"
+rm -Rf "$HOME/Library/Application Support/app-core"
+rm -Rf "$HOME/Library/Application Support/app-graphics3d"
+rm -Rf "$HOME/Library/Application Support/app-simple"
+rm -Rf "$HOME/Library/Application Support/ca2"
+rm -Rf "$HOME/Library/Application Support/remoting"
+rm -Rf "$HOME/Library/Application Support/user"

@@ -1,0 +1,66 @@
+#!/bin/bash
+
+
+IOS_BASE_DIR=$HOME/build_space/ios
+MACOS_BASE_DIR=$HOME/build_space/macos
+STORAGE_IOS_DIR=$HOME/code/operating_system/storage-ios
+STORAGE_MACOS_DIR=$HOME/code/operating_system/storage-macos
+
+
+build_openssl_for_ios()
+{
+
+   mkdir -p $IOS_BASE_DIR
+
+   cd $IOS_BASE_DIR
+
+   _build_openssl_for_ios
+
+   return $?
+
+}
+
+build_openssl_for_macos()
+{
+
+   mkdir -p $MACOS_BASE_DIR
+
+   cd $MACOS_BASE_DIR
+
+   _build_openssl_for_macos
+
+   return $?
+
+}
+
+
+build_openssl_for_ios
+
+if [ $? -ne 0 ]; then
+  exit $?
+fi
+
+build_openssl_for_macos
+
+if [ $? -ne 0 ]; then
+  exit $?
+fi
+
+
+mkdir -p $STORAGE_IOS_DIR/Debug/framework
+mkdir -p $STORAGE_IOS_DIR/Release/framework
+
+rm -Rf $HOME/code/main/operating_system/operating_system-ios/include/openssl
+#cp -Rf $IOS_BASE_DIR/output/include/* $HOME/code/main/operating_system/operating_system-ios/include
+cp -Rf $IOS_BASE_DIR/output/* $STORAGE_IOS_DIR/Debug/framework
+cp -Rf $IOS_BASE_DIR/output/* $STORAGE_IOS_DIR/Release/framework
+
+mkdir -p $STORAGE_MACOS_DIR/library/Static
+mkdir -p $STORAGE_MACOS_DIR/Debug/library
+mkdir -p $STORAGE_MACOS_DIR/Release/library
+
+rm -Rf $HOME/code/main/operating_system/operating_system-macos/include/openssl
+cp -Rf $MACOS_BASE_DIR/output/include/* $HOME/code/main/operating_system/operating_system-macos/include
+cp -Rf $MACOS_BASE_DIR/output/static_library/* $STORAGE_MACOS_DIR/library/Static
+cp -Rf $MACOS_BASE_DIR/output/shared_library/* $STORAGE_MACOS_DIR/Debug/library
+cp -Rf $MACOS_BASE_DIR/output/shared_library/* $STORAGE_MACOS_DIR/Release/library

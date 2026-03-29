@@ -1,0 +1,137 @@
+#!/bin/bash
+
+
+# output/
+# ├── include/
+# ├── static_library/
+# │   ├── libssl.a
+# │   └── libcrypto.a
+# └── shared_library/
+#     ├── libssl.dylib
+#     └── libcrypto.dylib
+
+# ⚠️ One more critical step (often missed)
+
+# Your executable itself must also reference the libraries correctly.
+
+# Check it:
+
+# otool -L my_executable
+
+# If you see:
+
+# /usr/local/lib/libssl.dylib   ❌
+
+# You must fix it:
+
+# install_name_tool -change \
+#   /usr/local/lib/libssl.dylib \
+#   @loader_path/libssl.dylib \
+#   my_executable
+
+# install_name_tool -change \
+#   /usr/local/lib/libcrypto.dylib \
+#   @loader_path/libcrypto.dylib \
+#   my_executable
+
+set -euo pipefail
+
+# ===== CONFIG =====
+. _openssl
+. _macos
+OUTPUT_DIR="$(pwd)/output"
+BUILD_DIR="$(pwd)/build"
+
+rm -rf "$BUILD_DIR" "$OUTPUT_DIR"
+mkdir -p "$BUILD_DIR" "$OUTPUT_DIR"
+
+# ===== DOWNLOAD =====
+if [ ! -d "$OPENSSL_VERSION" ]; then
+  echo "Downloading OpenSSL..."
+  curl -LO https://www.openssl.org/source/${OPENSSL_VERSION}.tar.gz
+  tar -xzf ${OPENSSL_VERSION}.tar.gz
+fi
+
+cd "$OPENSSL_VERSION"
+
+build() {
+  ARCH=$1
+
+  echo "Building macOS ($ARCH)..."
+
+  SDK_PATH=$(xcrun --sdk macosx --show-sdk-path)
+
+  export CC="$(xcrun --sdk macosx -find clang)"
+  export CFLAGS="-arch $ARCH -isysroot $SDK_PATH -mmacosx-version-min=$MIN_MACOS_VERSION"
+  export LDFLAGS="-arch $ARCH -isysroot $SDK_PATH"
+
+  make clean || true
+
+  ./Configure darwin64-${ARCH}-cc \
+    shared no-tests \
+    --prefix="$BUILD_DIR/macos-$ARCH"
+
+  make -j$(sysctl -n hw.ncpu)
+  make install_sw
+}
+
+# ===== BUILD =====
+build arm64
+build x86_64
+
+# ===== CREATE UNIVERSAL LIBS =====
+echo "Creating universal binaries..."
+
+mkdir -p "$OUTPUT_DIR/static_library"
+mkdir -p "$OUTPUT_DIR/shared_library"
+
+# --- STATIC ---
+lipo -create \
+  "$BUILD_DIR/macos-arm64/lib/libssl.a" \
+  "$BUILD_DIR/macos-x86_64/lib/libssl.a" \
+  -output "$OUTPUT_DIR/static_library/libssl.a"
+
+lipo -create \
+  "$BUILD_DIR/macos-arm64/lib/libcrypto.a" \
+  "$BUILD_DIR/macos-x86_64/lib/libcrypto.a" \
+  -output "$OUTPUT_DIR/static_library/libcrypto.a"
+
+# --- SHARED (.dylib) ---
+lipo -create \
+  "$BUILD_DIR/macos-arm64/lib/libssl.dylib" \
+  "$BUILD_DIR/macos-x86_64/lib/libssl.dylib" \
+  -output "$OUTPUT_DIR/shared_library/libssl.dylib"
+
+lipo -create \
+  "$BUILD_DIR/macos-arm64/lib/libcrypto.dylib" \
+  "$BUILD_DIR/macos-x86_64/lib/libcrypto.dylib" \
+  -output "$OUTPUT_DIR/shared_library/libcrypto.dylib"
+
+# # ===== FIX INSTALL NAMES =====
+# echo "Fixing install names..."
+
+# install_name_tool -id "@rpath/libssl.dylib" "$OUTPUT_DIR/lib/libssl.dylib"
+# install_name_tool -id "@rpath/libcrypto.dylib" "$OUTPUT_DIR/lib/libcrypto.dylib"
+
+# install_name_tool -change "$BUILD_DIR/macos-arm64/lib/libcrypto.dylib" "@rpath/libcrypto.dylib" "$OUTPUT_DIR/lib/libssl.dylib" || true
+
+echo "Fixing install names for local distribution..."
+
+# Set each dylib to resolve relative to the executable location
+install_name_tool -id "@loader_path/libcrypto.dylib" "$OUTPUT_DIR/shared_library/libcrypto.dylib"
+install_name_tool -id "@loader_path/libssl.dylib" "$OUTPUT_DIR/shared_library/libssl.dylib"
+
+# Make libssl depend on libcrypto using @loader_path
+install_name_tool -change \
+  "@rpath/libcrypto.dylib" \
+  "@loader_path/libcrypto.dylib" \
+  "$OUTPUT_DIR/shared_library/libssl.dylib" || true
+
+  
+# ===== COPY HEADERS =====
+cp -R "$BUILD_DIR/macos-arm64/include" "$OUTPUT_DIR/"
+
+echo ""
+echo "✅ Done Building OpenSSL for macOS!"
+echo "Output:"
+echo "  $OUTPUT_DIR"

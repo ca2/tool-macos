@@ -1,0 +1,136 @@
+#!/bin/bash
+set -euo pipefail
+
+# ===== CONFIG =====
+. _openssl
+. _ios
+
+ROOT_DIR="$(pwd)"
+SRC_DIR="$ROOT_DIR/$OPENSSL_VERSION"
+BUILD_DIR="$ROOT_DIR/build"
+OUTPUT_DIR="$ROOT_DIR/output"
+
+rm -rf "$BUILD_DIR" "$OUTPUT_DIR"
+mkdir -p "$BUILD_DIR" "$OUTPUT_DIR"
+
+# ===== DOWNLOAD =====
+if [ ! -d "$SRC_DIR" ]; then
+  echo "Downloading OpenSSL..."
+  curl -LO https://www.openssl.org/source/${OPENSSL_VERSION}.tar.gz
+  tar -xzf ${OPENSSL_VERSION}.tar.gz
+fi
+
+cd "$SRC_DIR"
+
+# ===== BUILD FUNCTION =====
+build() {
+  ARCH=$1
+  PLATFORM=$2
+  CONFIG=$3
+
+  echo "Building $PLATFORM ($ARCH)..."
+
+  if [[ "$PLATFORM" == "iPhoneOS" ]]; then
+    SDK="iphoneos"
+    TARGET="${ARCH}-apple-ios${MIN_IOS_VERSION}"
+  else
+    SDK="iphonesimulator"
+    TARGET="${ARCH}-apple-ios${MIN_IOS_VERSION}-simulator"
+  fi
+
+  SDK_PATH=$(xcrun --sdk $SDK --show-sdk-path)
+
+  export CC="$(xcrun --sdk $SDK -find clang)"
+  export CFLAGS="-arch $ARCH -isysroot $SDK_PATH -target $TARGET -fembed-bitcode"
+  export LDFLAGS="-arch $ARCH -isysroot $SDK_PATH -target $TARGET"
+
+  make clean || true
+  if [ $? -ne 0 ]; then
+    return $?
+  fi
+
+  ./Configure $CONFIG no-shared no-dso no-engine no-tests \
+    --prefix="$BUILD_DIR/$PLATFORM-$ARCH"
+  if [ $? -ne 0 ]; then
+    return $?
+  fi
+
+  make -j$(sysctl -n hw.ncpu)
+  if [ $? -ne 0 ]; then
+    return $?
+  fi
+  make install_sw
+  if [ $? -ne 0 ]; then
+    return $?
+  fi
+}
+
+# ===== BUILD TARGETS =====
+
+# Device
+build arm64 iPhoneOS ios64-cross
+if [ $? -ne 0 ]; then
+  exit $?
+fi
+
+# Simulator (Apple Silicon + Intel)
+build arm64 iPhoneSimulator iossimulator-xcrun
+if [ $? -ne 0 ]; then
+  exit $?
+fi
+build x86_64 iPhoneSimulator iossimulator-xcrun
+if [ $? -ne 0 ]; then
+  exit $?
+fi
+
+# ===== MERGING SIMULATOR LIBRARIES =====
+echo "Merging simulator libraries..."
+
+mkdir -p "$BUILD_DIR/simulator/lib"
+
+# libssl
+lipo -create \
+  "$BUILD_DIR/iPhoneSimulator-arm64/lib/libssl.a" \
+  "$BUILD_DIR/iPhoneSimulator-x86_64/lib/libssl.a" \
+  -output "$BUILD_DIR/simulator/lib/libssl.a"
+if [ $? -ne 0 ]; then
+  exit $?
+fi
+# libcrypto
+lipo -create \
+  "$BUILD_DIR/iPhoneSimulator-arm64/lib/libcrypto.a" \
+  "$BUILD_DIR/iPhoneSimulator-x86_64/lib/libcrypto.a" \
+  -output "$BUILD_DIR/simulator/lib/libcrypto.a"
+if [ $? -ne 0 ]; then
+  exit $?
+fi
+# ===== CREATE XCFRAMEWORKS =====
+echo "Creating XCFrameworks..."
+
+# libssl
+xcodebuild -create-xcframework \
+  -library "$BUILD_DIR/iPhoneOS-arm64/lib/libssl.a" \
+  -headers "$BUILD_DIR/iPhoneOS-arm64/include" \
+  -library "$BUILD_DIR/simulator/lib/libssl.a" \
+  -headers "$BUILD_DIR/iPhoneSimulator-arm64/include" \
+  -output "$OUTPUT_DIR/libssl.xcframework"
+if [ $? -ne 0 ]; then
+  exit $?
+fi
+
+# libcrypto
+xcodebuild -create-xcframework \
+  -library "$BUILD_DIR/iPhoneOS-arm64/lib/libcrypto.a" \
+  -headers "$BUILD_DIR/iPhoneOS-arm64/include" \
+  -library "$BUILD_DIR/simulator/lib/libcrypto.a" \
+  -headers "$BUILD_DIR/iPhoneSimulator-arm64/include" \
+  -output "$OUTPUT_DIR/libcrypto.xcframework"
+
+if [ $? -ne 0 ]; then
+  exit $?
+fi
+
+echo ""
+echo "✅ Done building OpenSSL for iOS!"
+echo "Output:"
+echo "  $OUTPUT_DIR"

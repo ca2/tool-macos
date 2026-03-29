@@ -1,0 +1,40 @@
+#!/bin/bash
+set -e
+
+SCHEME="_integration_code"
+CONFIGURATION="Release"
+
+PROJECT_PATH="$HOME/code/integration/source/integration/code/__implement/_integration_code.xcodeproj"
+RELEASE_DIR="$HOME/store/macos"
+
+ARCHIVE_PATH="$RELEASE_DIR/_integration_code.xcarchive"
+EXPORT_DIR="$HOME/store/macos"
+EXPORT_OPTIONS="$HOME/code/operating_system/lemon/DistributableExportOptions.plist"
+
+APP_NAME="_integration_code.app"
+ZIP_NAME="code.zip"
+ZIP_PATH="$RELEASE_DIR/$ZIP_NAME"
+
+mkdir -p "$RELEASE_DIR"
+
+# 1) Archive
+xcodebuild \
+  -project "$PROJECT_PATH" \
+  -scheme "$SCHEME" \
+  -configuration "$CONFIGURATION" \
+  -archivePath "$ARCHIVE_PATH" \
+  archive
+
+# 2) Export
+xcodebuild \
+  -exportArchive \
+  -archivePath "$ARCHIVE_PATH" \
+  -exportPath "$EXPORT_DIR" \
+  -exportOptionsPlist "$EXPORT_OPTIONS"
+
+# 3) Zip exported app
+ditto -c -k --sequesterRsrc --keepParent \
+  "$EXPORT_DIR/$APP_NAME" \
+  "$ZIP_PATH"
+
+echo "Done: $ZIP_PATH"
