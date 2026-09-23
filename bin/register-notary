@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+email=$(cat $HOME/.sensitive/notary-email.txt)
+teamid=$(cat $HOME/.sensitive/team-id.txt)
+notary=$(cat $HOME/.sensitive/notary.txt)
+echo "Apple-ID: $email"
+echo "Team-ID:  $teamid"
+xcrun notarytool store-credentials "machine-notary" --apple-id "$email" --team-id "$teamid" --password "$notary"
+
+

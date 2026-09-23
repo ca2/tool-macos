@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Some Debugging
+
+echo "HOME at checkout = $HOME"
 
 $HOME/code/operating_system/tool/bin/application_build_helper --git-checkout "$@"
 

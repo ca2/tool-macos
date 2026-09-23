@@ -5,6 +5,9 @@ copy_application_output()
 
    cd ${WorkspaceDir}
 
+   implement=$(basename ${PROJECT_DIR})
+
+
    item_path=$(dirname ${PROJECT_DIR})
 
    #echo "item_path=${item_path}"
@@ -21,7 +24,7 @@ copy_application_output()
 
    #echo "root=${root}"
 
-   ${HOME}/code/operating_system/tool/bin/application_build_helper --copy-application-output $root/$item
+   ${HOME}/code/operating_system/tool/bin/application_build_helper --copy-application-output $root/$item $implement
 
    EXIT_CODE=$?
 
@@ -35,7 +38,7 @@ ls -l ${HOME}/code/operating_system/tool/bin/application_build_helper
 INPUT_FOLDER="${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}"
 
 # $(WorkspaceDir)/time-$(PLATFORM_MODIFIER)/$(CONFIGURATION)
-OUTPUT_FOLDER="${WorkspaceDir}/time-${PLATFORM_MODIFIER}/output"
+OUTPUT_FOLDER="${WorkspaceDir}/time-${PLATFORM_MODIFIER}/output-${CONFIGURATION}"
 
 if [ ! -d "${OUTPUT_FOLDER}" ]; then
    
