@@ -5,7 +5,7 @@ if [ "$ACTION" != "install" ]; then
    INPUT_FOLDER="${BUILT_PRODUCTS_DIR}"
 
 # $(WorkspaceDir)/time-$(PLATFORM_MODIFIER)/$(CONFIGURATION)
-   OUTPUT_FOLDER="${WorkspaceDir}/time-${PLATFORM_MODIFIER}/output"
+   OUTPUT_FOLDER="${WorkspaceDir}/time-${PLATFORM_MODIFIER}/output-${CONFIGURATION}"
 
    if [ ! -d "${OUTPUT_FOLDER}" ]; then
    
