@@ -4,6 +4,7 @@
 prepare_project()
 {
 
+
    echo "WorkspaceDir=${WorkspaceDir}"
    echo "SRCROOT is ${SRCROOT}"
    echo "HOME=${HOME}"
@@ -36,7 +37,7 @@ prepare_project()
    strAppId="${root}/${name}"
    echo "strAppId is ${strAppId}"
    
-   ${HOME}/code/operating_system/tool/bin/application_build_helper --prepare-project ${strAppId}
+   ${HOME}/code/operating_system/tool/bin/application_build_helper --prepare-project ${strAppId} ${CONFIGURATION}
 
 
 }

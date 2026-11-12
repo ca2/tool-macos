@@ -24,7 +24,7 @@ copy_application_output()
 
    #echo "root=${root}"
 
-   ${HOME}/code/operating_system/tool/bin/application_build_helper --copy-application-output $root/$item $implement
+   ${HOME}/code/operating_system/tool/bin/application_build_helper --copy-application-output $root/$item $implement ${CONFIGURATION}
 
    EXIT_CODE=$?
 
@@ -33,20 +33,32 @@ copy_application_output()
 }
 
 echo "Running helper:"
+echo "\${BUILT_PRODUCTS_DIR} is ${BUILT_PRODUCTS_DIR}"
+echo "\${EXECUTABLE_FOLDER_PATH} is ${EXECUTABLE_FOLDER_PATH}"
+echo "\${PLATFORM_MODIFIER} is ${PLATFORM_MODIFIER}"
+echo "\${CONFIGURATION} is ${CONFIGURATION}"
 ls -l ${HOME}/code/operating_system/tool/bin/application_build_helper
 
 INPUT_FOLDER="${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}"
+echo "\${INPUT_FOLDER} is ${INPUT_FOLDER}"
 
 # $(WorkspaceDir)/time-$(PLATFORM_MODIFIER)/$(CONFIGURATION)
 OUTPUT_FOLDER="${WorkspaceDir}/time-${PLATFORM_MODIFIER}/output-${CONFIGURATION}"
+echo "\${OUTPUT_FOLDER} is ${OUTPUT_FOLDER}"
 
 if [ ! -d "${OUTPUT_FOLDER}" ]; then
+
+   echo "OUTPUT_FOLDER isn't a directory, going to try to create it"
    
    mkdir -p "${OUTPUT_FOLDER}"
 
 fi
 
+echo "cp \"${INPUT_FOLDER}/${EXECUTABLE_NAME}\" \"${OUTPUT_FOLDER}/${EXECUTABLE_NAME}\""
 cp "${INPUT_FOLDER}/${EXECUTABLE_NAME}" "${OUTPUT_FOLDER}/${EXECUTABLE_NAME}"
+
+COPY_CMD_ERROR=$?
+echo "COPY_CMD_ERROR ${COPY_CMD_ERROR}"
 
 copy_application_output
 
